@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import OrderHistory from "../OrderHistory/OrderHistory";
 import "./Account.css";
 
@@ -11,6 +12,15 @@ function Account() {
   useEffect(() => {
     setScale("null");
   }, []);
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <section className="account">
       {shade && <div className="shade" onClick={() => setShade(!shade)}></div>}
@@ -66,7 +76,7 @@ function Account() {
               <label>Status :</label> Pending....
             </p>
             <p className="logout">
-              <label>
+              <label onClick={handleLogout}>
                 Logout <i className="fa-solid fa-right-from-bracket"></i>
               </label>
             </p>

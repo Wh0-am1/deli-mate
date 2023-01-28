@@ -1,22 +1,44 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import "./login.css";
-//comment
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [eyeSize1, setEyeSize1] = useState("show-eye");
   const [eyeSize2, setEyeSize2] = useState("hide-eye");
   const [flag, setFlag] = useState(false);
+  const { login } = useAuth();
+  const [message, setMessage] = useState("");
 
   const navigate = useNavigate();
 
-  const submitHandle = (e) => {
+  const submitHandle = async (e) => {
     e.preventDefault();
-    if (email === "deli-mate" && password === "deli-mate")
+    // if (email === "deli-mate" && password === "deli-mate")
+    try {
+      await login(email, password);
       navigate("/Home", { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
   };
+  const { resetPassword } = useAuth();
 
+  const handleForgotPassword = async () => {
+    try {
+      if (email) {
+        await resetPassword(email);
+        setMessage("Please check your email for further instructions");
+      } else {
+        setMessage("Please enter the email");
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage("Enter a vailid email");
+    }
+  };
   const eyeShow = (e) => {
     if (e.target.id === "1") {
       setEyeSize1("hide-eye");
@@ -57,12 +79,13 @@ function Login() {
           />
           <button>Login</button>
           <div className="login-other">
-            <span>forgot password?</span>
+            <span onClick={handleForgotPassword}>forgot password?</span>
             <span>
               <Link to="/create">
                 <span>create account</span>
               </Link>
             </span>
+            {message && <p>{message}</p>}
           </div>
         </form>
       </div>

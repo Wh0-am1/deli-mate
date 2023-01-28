@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../Login/login.css";
 import "./create.css";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Create() {
   const [check, setCheck] = useState(false);
@@ -15,6 +16,8 @@ function Create() {
   const [eyeSize1, setEyeSize1] = useState("show-eye");
   const [eyeSize2, setEyeSize2] = useState("hide-eye");
   const [flag, setFlag] = useState(true);
+
+  const { signup } = useAuth();
 
   const eyeShow = (e) => {
     if (flag) {
@@ -39,6 +42,12 @@ function Create() {
       address,
       licence,
     });
+    try {
+      const res = signup(email, password);
+      console.log({ res });
+    } catch (error) {
+      console.log({ error });
+    }
   };
   let resize = "null";
 
