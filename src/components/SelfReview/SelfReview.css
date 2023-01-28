@@ -1,0 +1,29 @@
+.self-review .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1rem;
+    align-items: center;
+    gap: 1rem;
+}
+.self-review .container h1{
+    width: 150px;
+    height: 20px;
+    padding:1rem;
+    background-color: rgb(39, 189, 200);
+    border-radius: 20px;
+    transition: all 0.4s;
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+}
+.self-review .container h1:hover{
+    background-color: rgb(27, 148, 157);
+}
+.self-review .container textarea{
+    resize: none;
+    width: 80%;
+    height: 150px;
+    margin: auto;
+    padding: 1rem;
+}

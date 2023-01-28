@@ -1,0 +1,5 @@
+.main-body{
+    background-color:rgb(219, 216, 219);
+    overflow-y: hidden;
+    transition: all 0.5s;
+}

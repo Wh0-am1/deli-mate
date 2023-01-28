@@ -1,0 +1,39 @@
+.Report-list {
+    margin-top: 1rem;
+}
+.Report-list .container {
+    font-size: 1.2rem;
+    padding-bottom: 1rem;
+    background-color: rgb(204, 201, 196);
+    border-radius: 10px;
+}
+.Report-list .container .heading{
+    margin-bottom: 1rem;
+}
+.Report-list .container .report-body{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.Report-list .container .report-body p{
+    line-height: 1.5rem;
+    font-family: 'Prompt', sans-serif;
+} 
+.Report-list .container .report-body h1{
+    font-size: 1.5rem;
+    font-family: 'Mukta', sans-serif;
+}
+.Report-list .container .report-body .btn{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.Report-list .container .report-body .btn button{
+    width: 100px;
+    height: 1.5rem;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+.Report-list .container .report-body .btn button:active{
+    scale: 0.8;
+}
