@@ -19,7 +19,6 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  // Initialize Firebase
 
   function signup(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);

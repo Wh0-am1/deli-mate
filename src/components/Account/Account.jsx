@@ -9,6 +9,7 @@ function Account() {
   const [scale, setScale] = useState("scale");
   const [shade, setShade] = useState(false);
   const [block, setBlock] = useState(false);
+  const { currentUser } = useAuth();
   useEffect(() => {
     setScale("null");
   }, []);
@@ -67,7 +68,7 @@ function Account() {
               <label>Phone :</label> 994645434
             </p>
             <p>
-              <label>Email :</label> email@gmail.com
+              <label>Email :</label> {currentUser.email}
             </p>
             <p>
               <label>Account :</label> Normal

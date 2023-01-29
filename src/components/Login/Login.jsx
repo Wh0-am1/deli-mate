@@ -11,6 +11,7 @@ function Login() {
   const [flag, setFlag] = useState(false);
   const { login } = useAuth();
   const [message, setMessage] = useState("");
+  const [color, setColor] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,12 +31,14 @@ function Login() {
     try {
       if (email) {
         await resetPassword(email);
+        setColor("rmd");
         setMessage("Please check your email for further instructions");
       } else {
+        setColor("err");
         setMessage("Please enter the email");
       }
     } catch (error) {
-      console.log(error);
+      setColor("err");
       setMessage("Enter a vailid email");
     }
   };
@@ -56,6 +59,7 @@ function Login() {
       <div className="bg-img"></div>
       <div className="login-box">
         <span className="heading">Deli-Mate</span>
+        {message && <p className={`wrn-msg ${color}`}>{message}</p>}
         <form onSubmit={submitHandle} className="form login-form">
           <input
             type="text"
@@ -85,7 +89,6 @@ function Login() {
                 <span>create account</span>
               </Link>
             </span>
-            {message && <p>{message}</p>}
           </div>
         </form>
       </div>
