@@ -6,41 +6,97 @@
   justify-content: center;
   align-items: center;
 }
+.add .container .type {
+  display: flex;
+  flex-direction: row;
+}
+.add .container .type select {
+  border-radius: 15px;
+}
 .add .add-body {
   background-color: rgb(163, 214, 178);
   padding: 1rem;
   border-radius: 15px;
   display: flex;
-  gap: 1rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
   box-shadow: 0 0 10px black;
 }
-.add div{
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    font-size: 1.5rem;
+.add div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 1.5rem;
 }
-.add div input{
-    height: 30px;
-    border-radius: 20px;
-    padding: 1rem;
-    font-size: 1.3rem;
-    border: none;
+.add div input {
+  height: 30px;
+  border-radius: 20px;
+  padding: 1rem;
+  font-size: 1.3rem;
+  border: none;
 }
-.add div button{
-    width: 100px;
-    height: 50px;
-    border-radius: 20px;
-    border: none;
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    color: white;
-    background-color: rgb(62 116 139);
+.add div button {
+  width: 100px;
+  height: 50px;
+  border-radius: 20px;
+  border: none;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  color: white;
+  background-color: rgb(62 116 139);
+  transition: all 0.3s;
 }
-.add .heading{
-    padding: 1rem 1.2rem 1.2rem 2rem;
+.add div button:active {
+  scale: 0.8;
+}
+.add .heading {
+  padding: 1rem 1.2rem 1.2rem 2rem;
+}
+.add .success {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(76, 245, 118);
+  padding: 1rem;
+  width: 100%;
+  position: absolute;
+  right: 1rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  width: 250px;
+  box-shadow: 0 0 10px black;
+  transition: all 0.3s;
+}
+.add .success p {
+  font-size: 1.2rem;
+}
+.add .success i {
+  font-size: 1.2rem;
+}
+.no-go {
+  transform: translateX(150%);
+}
+.go {
+  animation: go alternate 0.4s;
+}
+@keyframes go {
+  0% {
+    transform: translateX(150%);
+  }
+  25% {
+    transform: translateX(200px);
+  }
+  50% {
+    transform: translateX(50px);
+  }
+  75% {
+    transform: translateX(-50px);
+  }
+  85% {
+    transform: translateX(-25px);
+  }
+  100% {
+    transform: translateX(1px);
+  }
 }

@@ -1,5 +1,25 @@
-.main-body{
-    background-color:rgb(219, 216, 219);
-    overflow-y: hidden;
-    transition: all 0.5s;
+.main-body {
+  background-color: rgb(219, 216, 219);
+  overflow-y: hidden;
+  min-height: 100vh;
+  transition: all 0.5s;
+  width: 100%;
+}
+.main-body .contain-body {
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-row-gap: 1rem;
+  margin-top: 1rem;
+  grid-column-gap: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media (max-width: 1230px) {
+  .main-body .contain-body {
+    display: flex;
+    grid-row-gap: 1rem;
+    flex-direction: column;
+  }
 }

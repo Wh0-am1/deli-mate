@@ -7,8 +7,9 @@ import {
   updatePassword,
   signOut,
 } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../firebase-config";
+import { auth, db } from "../firebase-config";
 
 const AuthContext = React.createContext();
 
@@ -44,6 +45,12 @@ export function AuthProvider({ children }) {
     return updatePassword(auth.currentUser, password);
   }
 
+  function dataEntry(data) {
+    return setDoc(doc(db, "Foodlistings", auth.currentUser.uid), {
+      ...data,
+    });
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -61,6 +68,7 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateUserEmail,
     updateUserPassword,
+    dataEntry,
   };
 
   return (

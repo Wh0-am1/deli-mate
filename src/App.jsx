@@ -19,7 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/Create" element={<Create />} />
           <Route
-            path="/Home"
+            path="/Home/*"
             element={
               <PrivateRoute>
                 <Main />

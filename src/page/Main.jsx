@@ -3,17 +3,18 @@ import { Route, Routes } from "react-router-dom";
 import Hedear from "../components/Main/Header";
 import Filter from "../components/Filter/Filter";
 import Lists from "../components/Lists/Lists";
-import '../components/Filter/Filter.css'
-
+import "../components/Filter/Filter.css";
+import { useAuth } from "../contexts/AuthContext";
 
 let flag;
 
 function Main() {
+  const { currentUser } = useAuth();
+  console.log(currentUser.uid);
 
-  useEffect(()=>{
+  useEffect(() => {
     flag = true;
-  },[]);
-  
+  }, []);
 
   const widthHandling = () => {
     if (flag) {
@@ -35,7 +36,7 @@ function Main() {
           <Filter width={width} setWidth={widthHandling} />
         </div>
         <Routes>
-            <Route path="/" element={<Lists />} />
+          <Route path="/" element={<Lists />} />
         </Routes>
       </div>
     </section>

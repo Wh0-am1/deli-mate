@@ -24,21 +24,21 @@ function FoodList() {
   const [height, setHeight] = useState("null");
   return (
     <section className="FoodList">
-      <div className={`container ${moveSide} ${opacity} ${height}`} onClick={() => navigate("/Order")}>
-        <div className="description" >
-          <h1>Deli-Mate</h1>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Perferendis laboriosam voluptatibus, beatae praesentium, a voluptate
-            aperiam magni dicta vel libero odit. Ab rerum explicabo obcaecati
-            dolorem et eaque natus modi.
-          </p>
+      <div
+        className={`container ${moveSide} ${opacity} ${height}`}
+        onClick={() => navigate("/Order")}
+      >
+        <div className="img-bs">
+          <img src="./img/img2.jpg" alt="img" />
         </div>
-        <div className="details">
-          <h1>Price : 400/-</h1>
-          <p className="qty">quantity : 10</p>
-          <p> Type : veg</p>
-          <p id="rating">rating : 5.0</p>
+        <div className="description">
+          <h1>Deli-Mate</h1>
+          <div className="details">
+            <h1>Price : 400/-</h1>
+            <p className="qty">quantity : 10</p>
+            <p> Type : veg</p>
+            <p id="rating">rating : 5.0</p>
+          </div>
         </div>
       </div>
     </section>

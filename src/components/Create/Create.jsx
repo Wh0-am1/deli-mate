@@ -1,21 +1,26 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../Login/login.css";
 import "./create.css";
 import { useAuth } from "../../contexts/AuthContext";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase-config";
 
 function Create() {
-  const [check, setCheck] = useState(false);
+  const [rBusiness, setCheck] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [licence, setLicence] = useState("");
+  const [pincode, setPincode] = useState("");
 
   const [eyeSize1, setEyeSize1] = useState("show-eye");
   const [eyeSize2, setEyeSize2] = useState("hide-eye");
   const [flag, setFlag] = useState(true);
+
+  const navigate = useNavigate();
 
   const { signup } = useAuth();
 
@@ -31,27 +36,33 @@ function Create() {
     }
   };
 
-  const btnHandle = (e) => {
+  const btnHandle = async (e) => {
     e.preventDefault();
-    console.log({
-      check,
+    const data = {
+      rBusiness,
       name,
       password,
       email,
       phone,
-      address,
-      licence,
-    });
+    };
     try {
-      const res = signup(email, password);
-      console.log({ res });
+      const res = await signup(email, password);
+      await setDoc(doc(db, "users", res.user.uid), {
+        ...data,
+      }).then(() => navigate("/Home"));
+      if (rBusiness) {
+        await setDoc(doc(db, "users", res.user.uid), {
+          address,
+          licence,
+        });
+      }
     } catch (error) {
       console.log({ error });
     }
   };
   let resize = "null";
 
-  check ? (resize = "resize") : (resize = "null");
+  rBusiness ? (resize = "resize") : (resize = "null");
 
   return (
     <section className="login create">
@@ -107,7 +118,6 @@ function Create() {
             }}
             placeholder="Password"
             required
-            pattern="^(?=.*\d).{4,8}$"
             title="atleast 4 character and must be contains number"
           />
 
@@ -140,7 +150,7 @@ function Create() {
             {/*______*/}
 
             {/* Address */}
-            {check && (
+            {rBusiness && (
               <div className="Address address">
                 <input
                   required
@@ -154,6 +164,10 @@ function Create() {
                 />
                 <input
                   type="number"
+                  value={pincode}
+                  onChange={(e) => {
+                    setPincode(e.target.value);
+                  }}
                   className="pincode"
                   placeholder="Pincode"
                   required
@@ -164,7 +178,7 @@ function Create() {
             {/*  */}
 
             {/* Lincence Number */}
-            {check && (
+            {rBusiness && (
               <input
                 required
                 value={licence}

@@ -17,12 +17,21 @@ function Login() {
 
   const submitHandle = async (e) => {
     e.preventDefault();
-    // if (email === "deli-mate" && password === "deli-mate")
     try {
       await login(email, password);
       navigate("/Home", { replace: true });
     } catch (error) {
-      console.log(error);
+      setColor("err");
+      if (error.message.search("invalid-email") > 0) {
+        setMessage("Invalid Email");
+      } else if (error.message.search("wrong-password") > 0) {
+        setMessage("Wrong Password");
+      } else if (error.message.search("user-not-found") > 0) {
+        setMessage("User Not Found");
+      } else {
+        setMessage("Something Wrong");
+        console.log(error.message);
+      }
     }
   };
   const { resetPassword } = useAuth();

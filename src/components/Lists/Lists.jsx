@@ -13,19 +13,22 @@ function Lists() {
 
   const getData = async () => {
     const queryResult = await getDocs(collection(db, "foodlistings"));
-    setData(queryResult.docs.map((doc) => ({ id: doc.id, data: doc.data() })));
+    console.log(queryResult);
   };
 
   return (
     <section className="main-body">
-      {/* <FoodList />
-      <FoodList />
-      <FoodList />
-      <FoodList />
-      <FoodList /> */}
-      {data.map((elt) => (
+      <div className="contain-body">
+        <FoodList />
+        <FoodList />
+        <FoodList />
+        <FoodList />
+        <FoodList />
+      </div>
+
+      {/* {data.map((elt) => (
         <p>{elt.data.Name}</p>
-      ))}
+      ))} */}
     </section>
   );
 }
