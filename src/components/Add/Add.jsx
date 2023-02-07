@@ -22,7 +22,7 @@ function Add() {
     e.preventDefault();
     const data = { price, qty, nPrice, type };
     try {
-      await dataEntry(data);
+      await dataEntry(data, "Foodlistings");
       launch_toast();
     } catch (e) {
       console.log(e);

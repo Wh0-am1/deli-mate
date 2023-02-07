@@ -45,8 +45,8 @@ export function AuthProvider({ children }) {
     return updatePassword(auth.currentUser, password);
   }
 
-  function dataEntry(data) {
-    return setDoc(doc(db, "Foodlistings", auth.currentUser.uid), {
+  function dataEntry(data, collection) {
+    return setDoc(doc(db, collection, auth.currentUser.uid), {
       ...data,
     });
   }
