@@ -1,34 +1,41 @@
 import React, { useEffect, useState } from "react";
+import { getData, getDataId } from "../../dataManagement";
 import FoodList from "../FoodList/FoodList";
 import "./Lists.css";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase-config";
 
 function Lists() {
+  const [data, setData] = useState([]);
+  const [name, setName] = useState("");
+
   useEffect(() => {
-    getData();
+    const get = async () => {
+      setData(await getData("Foodlistings"));
+    };
+    get();
   }, []);
 
-  const [data, setData] = useState([]);
-
-  const getData = async () => {
-    const queryResult = await getDocs(collection(db, "foodlistings"));
-    console.log(queryResult);
+  const getName = async (id) => {
+    const dt = await getDataId("users", id);
+    dt && setName(dt.name);
   };
 
   return (
     <section className="main-body">
       <div className="contain-body">
-        <FoodList />
-        <FoodList />
-        <FoodList />
-        <FoodList />
-        <FoodList />
+        {data.map((elt) => {
+          getName(elt.user_Id);
+          return (
+            <FoodList
+              name={name}
+              price={elt.price}
+              qty={elt.qty}
+              type={elt.type}
+              key={elt.id}
+              id={elt.id}
+            />
+          );
+        })}
       </div>
-
-      {/* {data.map((elt) => (
-        <p>{elt.data.Name}</p>
-      ))} */}
     </section>
   );
 }

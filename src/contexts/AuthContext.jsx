@@ -7,9 +7,9 @@ import {
   updatePassword,
   signOut,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import React, { useContext, useState, useEffect } from "react";
-import { auth, db } from "../firebase-config";
+import { getDataId } from "../dataManagement";
+import { auth } from "../firebase-config";
 
 const AuthContext = React.createContext();
 
@@ -20,6 +20,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState("");
 
   function signup(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -45,30 +46,31 @@ export function AuthProvider({ children }) {
     return updatePassword(auth.currentUser, password);
   }
 
-  function dataEntry(data, collection) {
-    return setDoc(doc(db, collection, auth.currentUser.uid), {
-      ...data,
-    });
-  }
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
+      call(user);
       setLoading(false);
     });
+
+    const call = async (user) => {
+      const dt = await getDataId("users", user.uid);
+      console.log(dt);
+      dt && setRole(dt.rBusiness);
+    };
 
     return unsubscribe;
   }, []);
 
   const value = {
     currentUser,
+    role,
     login,
     signup,
     logout,
     resetPassword,
     updateUserEmail,
     updateUserPassword,
-    dataEntry,
   };
 
   return (

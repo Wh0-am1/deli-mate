@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 export const firebaseConfig = {
   apiKey: "AIzaSyAs6WtTrF_U3zyqKU9MOQQVahDUfzHe7Eo",
   authDomain: "deli-mate-21d62.firebaseapp.com",
@@ -13,4 +14,5 @@ export const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 export default app;

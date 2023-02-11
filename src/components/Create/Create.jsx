@@ -52,7 +52,9 @@ function Create() {
       }).then(() => navigate("/Home"));
       if (rBusiness) {
         await setDoc(doc(db, "users", res.user.uid), {
+          ...data,
           address,
+          pincode,
           licence,
         });
       }

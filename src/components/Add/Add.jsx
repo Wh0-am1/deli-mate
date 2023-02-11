@@ -1,7 +1,7 @@
-import { async } from "@firebase/util";
 import React from "react";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { dataEntry } from "../../dataManagement";
 import "./Add.css";
 
 function Add() {
@@ -9,7 +9,7 @@ function Add() {
   const [qty, setQty] = useState("");
   const [nPrice, setNprice] = useState("");
   const [type, setType] = useState("");
-  const { dataEntry } = useAuth();
+  const { currentUser } = useAuth();
   const [go, setGo] = useState("no-go");
   function launch_toast() {
     setGo("go");
@@ -22,7 +22,7 @@ function Add() {
     e.preventDefault();
     const data = { price, qty, nPrice, type };
     try {
-      await dataEntry(data, "Foodlistings");
+      await dataEntry(data, "Foodlistings", currentUser.uid);
       launch_toast();
     } catch (e) {
       console.log(e);

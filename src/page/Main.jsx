@@ -10,7 +10,6 @@ let flag;
 
 function Main() {
   const { currentUser } = useAuth();
-  console.log(currentUser.uid);
 
   useEffect(() => {
     flag = true;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./FoodList.css";
 import { useNavigate } from "react-router-dom";
 
-function FoodList() {
+function FoodList({ name, price, qty, type, id }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,18 +26,20 @@ function FoodList() {
     <section className="FoodList">
       <div
         className={`container ${moveSide} ${opacity} ${height}`}
-        onClick={() => navigate("/Order")}
+        onClick={() => {
+          navigate(`/Order/${id}`);
+        }}
       >
         <div className="img-bs">
           <img src="./img/img2.jpg" alt="img" />
         </div>
         <div className="description">
-          <h1>Deli-Mate</h1>
+          <h1>{name}</h1>
           <div className="details">
-            <h1>Price : 400/-</h1>
-            <p className="qty">quantity : 10</p>
-            <p> Type : veg</p>
-            <p id="rating">rating : 5.0</p>
+            <h1>Price : {`${price}/-`}</h1>
+            <p className="qty">quantity : {`${qty}`}</p>
+            <p> Type : {`${type}`}</p>
+            <p id="rating">rating : No</p>
           </div>
         </div>
       </div>

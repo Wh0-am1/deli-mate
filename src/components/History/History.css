@@ -1,0 +1,8 @@
+.history .container {
+  width: 80%;
+  margin: auto;
+}
+.history .container h1 {
+  background-color: azure;
+  margin-top: 1rem;
+}

@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import Main from "./page/Main";
 import Order from "./page/Order";
+import RoleManage from "./RoleManage";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/Create" element={<Create />} />
           <Route
-            path="/Home/*"
+            path="/Home"
             element={
               <PrivateRoute>
                 <Main />
@@ -27,7 +28,7 @@ function App() {
             }
           />
           <Route
-            path="/Order"
+            path="/Order/:id"
             element={
               <PrivateRoute>
                 <Order />
@@ -46,7 +47,9 @@ function App() {
             path="/Business/*"
             element={
               <PrivateRoute>
-                <Business />
+                <RoleManage r={true}>
+                  <Business />
+                </RoleManage>
               </PrivateRoute>
             }
           />
@@ -54,10 +57,13 @@ function App() {
             path="/Admin/*"
             element={
               <PrivateRoute>
-                <Admin />
+                <RoleManage r="admin">
+                  <Admin />
+                </RoleManage>
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </AuthProvider>
     </div>

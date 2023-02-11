@@ -1,5 +1,7 @@
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { storage } from "../../firebase-config";
 import OrderHistory from "../OrderHistory/OrderHistory";
 import "./Account.css";
 
@@ -9,15 +11,58 @@ function Account() {
   const [scale, setScale] = useState("scale");
   const [shade, setShade] = useState(false);
   const [block, setBlock] = useState(false);
+  const [file, setFile] = useState("");
+  const [k, setK] = useState(false);
+  const [img, setImg] = useState("");
   const { currentUser } = useAuth();
   useEffect(() => {
     setScale("null");
   }, []);
-  const { logout } = useAuth();
+  useEffect(() => {
+    const uploadFile = () => {
+      const name = new Date().getTime() + file.name;
+      const storageRef = ref(storage, name);
+      console.log(storageRef);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+
+          progress === 100 ? setK(true) : setK(false);
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+            default:
+              break;
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setImg(downloadURL);
+          });
+        }
+      );
+    };
+
+    file && uploadFile();
+  }, [file]);
+  const { logout, role } = useAuth();
 
   const handleLogout = async () => {
     try {
       await logout();
+      role.current = "";
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +106,15 @@ function Account() {
         <div className={`container ${scale}`}>
           <div className="card">
             <div className="profile-pic">
-              <img src="./img/default_profile.png" alt="profile_pic" />
+              <img
+                src={k ? img : "./img/default_profile.png"}
+                alt="profile_pic"
+              />
+              <input
+                type="file"
+                id="file"
+                onChange={(e) => setFile(e.target.files[0])}
+              />
             </div>
             <h1>Name</h1>
             <p>

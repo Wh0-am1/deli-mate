@@ -1,16 +1,38 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { dataEntry } from "../../dataManagement";
 import "./Booking.css";
 
 const n = [];
-const select = (num = 8) => {
+const select = (num) => {
   for (let i = 1; i <= num; i++) {
     n.push(i);
   }
   return n;
 };
+
 let shadow;
-function Booking({ repClick, setRepClick }) {
+function Booking({
+  repClick,
+  setRepClick,
+  name,
+  price,
+  qty,
+  type,
+  sid,
+  nPrice,
+}) {
+  const { currentUser } = useAuth();
+
+  function reportHandling() {
+    if (report) {
+      dataEntry({ report, sid }, "report", currentUser.uid);
+      setReport("");
+    } else console.log("nothing");
+  }
+
   const [block, setBlock] = useState(false);
+  const [report, setReport] = useState("");
   repClick ? (shadow = "report-bg") : (shadow = "null");
   return (
     <section className={`Booking`}>
@@ -18,8 +40,7 @@ function Booking({ repClick, setRepClick }) {
         className={`report-field ${shadow}`}
         onClick={() => setRepClick(block)}
       >
-        <div className={`field`}>
-        </div>
+        <div className={`field`}></div>
       </div>
       {repClick && (
         <div className={`div-field`}>
@@ -28,14 +49,23 @@ function Booking({ repClick, setRepClick }) {
             <textarea
               className="textarea-report"
               placeholder="write your reason"
+              value={report}
+              onChange={(e) => setReport(e.target.value)}
             ></textarea>
           </div>
-          <button className="report-submit">submit</button>
+          <button className="report-submit" onClick={reportHandling}>
+            submit
+          </button>
         </div>
       )}
       <div className="container">
         <div className="report">
-          <div className="three-dot" onClick={() => {setBlock(!block)}}>
+          <div
+            className="three-dot"
+            onClick={() => {
+              setBlock(!block);
+            }}
+          >
             <div></div>
             <div></div>
             <div></div>
@@ -53,17 +83,20 @@ function Booking({ repClick, setRepClick }) {
         </div>
         <div className="outline">
           <div className="img-book">
-            <img src="./img/img2.jpg" alt="img" />
+            <img
+              src="https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=694&q=80"
+              alt="img"
+            />
             <div className="total-qty">
               <span>Package Left!!!</span>
-              <h1>8</h1>
+              <h1>{qty}</h1>
             </div>
             <form className="form" onSubmit={(e) => e.preventDefault()}>
               <div className="booking-qty">
                 <span>Quantity</span>
                 <select className="qty-select">
                   <option value="">--quantity--</option>
-                  {select(8).map((num, index) => (
+                  {select(qty).map((num, index) => (
                     <option value={num} key={index}>
                       {num}
                     </option>
@@ -75,7 +108,7 @@ function Booking({ repClick, setRepClick }) {
           </div>
           <div className="book-details">
             <div className="head-rate">
-              <h1>Deli-Mate</h1>
+              <h1>{name}</h1>
               <i className="line"></i>
               <div className="rating">
                 <h1>5</h1>
@@ -83,8 +116,8 @@ function Booking({ repClick, setRepClick }) {
               </div>
             </div>
             <div className="price">
-              <p>200/-</p>
-              <p className="strike">279/-</p>
+              <p>{`${price}/-`}</p>
+              <p className="strike">{`${nPrice}/-`}</p>
             </div>
             <p>10:00 to 10:30</p>
             <div className="map">
