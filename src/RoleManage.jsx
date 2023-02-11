@@ -4,7 +4,7 @@ import { useAuth } from "./contexts/AuthContext";
 function RoleManage({ children, r }) {
   const { role } = useAuth();
 
-  if (role.current === r) {
+  if (role === r) {
     return children;
   } else return <Navigate to="/Home" />;
 }
