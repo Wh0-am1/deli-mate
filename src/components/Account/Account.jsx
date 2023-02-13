@@ -1,6 +1,7 @@
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { dataEntry } from "../../dataManagement";
 import { storage } from "../../firebase-config";
 import OrderHistory from "../OrderHistory/OrderHistory";
 import "./Account.css";
@@ -14,7 +15,8 @@ function Account() {
   const [file, setFile] = useState("");
   const [k, setK] = useState(false);
   const [img, setImg] = useState("");
-  const { currentUser } = useAuth();
+  const [feedback, setFeedback] = useState("");
+  const { currentUser, logout, role } = useAuth();
   useEffect(() => {
     setScale("null");
   }, []);
@@ -57,7 +59,6 @@ function Account() {
 
     file && uploadFile();
   }, [file]);
-  const { logout, role } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -67,6 +68,13 @@ function Account() {
       console.log(error);
     }
   };
+
+  function feedbacktHandling() {
+    if (feedback) {
+      dataEntry({ feedback }, "feedback", currentUser.uid);
+      setFeedback("");
+    } else console.log("nothing");
+  }
   return (
     <section className="account">
       {shade && <div className="shade" onClick={() => setShade(!shade)}></div>}
@@ -77,9 +85,13 @@ function Account() {
             <textarea
               className="textarea-report"
               placeholder="write your feedback"
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
             ></textarea>
           </div>
-          <button className="report-submit">submit</button>
+          <button className="report-submit" onClick={feedbacktHandling}>
+            submit
+          </button>
         </div>
       )}
       <div className="ac-container">
@@ -124,10 +136,11 @@ function Account() {
               <label>Email :</label> {currentUser.email}
             </p>
             <p>
-              <label>Account :</label> Normal
+              <label>Account :</label> {role === "pending" ? "Business" : role}
             </p>
             <p className="status">
-              <label>Status :</label> Pending....
+              <label>Status :</label>{" "}
+              {role === "pending" ? "Pending...." : "Verified"}
             </p>
             <p className="logout">
               <label onClick={handleLogout}>

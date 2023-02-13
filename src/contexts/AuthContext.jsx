@@ -55,7 +55,6 @@ export function AuthProvider({ children }) {
 
     const call = async (user) => {
       const dt = await getDataId("users", user.uid);
-      console.log(dt);
       dt && setRole(dt.rBusiness);
     };
 

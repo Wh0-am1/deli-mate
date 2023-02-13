@@ -47,7 +47,7 @@ function App() {
             path="/Business/*"
             element={
               <PrivateRoute>
-                <RoleManage r={true}>
+                <RoleManage r="Business">
                   <Business />
                 </RoleManage>
               </PrivateRoute>
@@ -57,7 +57,7 @@ function App() {
             path="/Admin/*"
             element={
               <PrivateRoute>
-                <RoleManage r="admin">
+                <RoleManage r="Admin">
                   <Admin />
                 </RoleManage>
               </PrivateRoute>

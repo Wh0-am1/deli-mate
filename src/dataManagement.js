@@ -34,6 +34,7 @@ export async function getDataId(cln, id) {
     return docSnap.data();
   } else {
     // doc.data() will be undefined in this case
+    console.log("no data found and " + id);
     return null;
   }
 }

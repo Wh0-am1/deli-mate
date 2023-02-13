@@ -6,8 +6,8 @@ import "./login.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [eyeSize1, setEyeSize1] = useState("show-eye");
-  const [eyeSize2, setEyeSize2] = useState("hide-eye");
+  const [eyeSize1, setEyeSize1] = useState("hide-eye");
+  const [eyeSize2, setEyeSize2] = useState("show-eye");
   const [flag, setFlag] = useState(false);
   const { login } = useAuth();
   const [message, setMessage] = useState("");
@@ -52,7 +52,7 @@ function Login() {
     }
   };
   const eyeShow = (e) => {
-    if (e.target.id === "1") {
+    if (flag) {
       setEyeSize1("hide-eye");
       setFlag(!flag);
       setEyeSize2("show-eye");

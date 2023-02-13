@@ -7,7 +7,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase-config";
 
 function Create() {
-  const [rBusiness, setCheck] = useState(false);
+  const [rBusiness, setCheck] = useState("Normal");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -17,8 +17,8 @@ function Create() {
   const [pincode, setPincode] = useState("");
 
   const [eyeSize1, setEyeSize1] = useState("show-eye");
-  const [eyeSize2, setEyeSize2] = useState("hide-eye");
-  const [flag, setFlag] = useState(true);
+  const [eyeSize2, setEyeSize2] = useState("show-eye");
+  const [flag, setFlag] = useState(false);
 
   const navigate = useNavigate();
 
@@ -64,7 +64,7 @@ function Create() {
   };
   let resize = "null";
 
-  rBusiness ? (resize = "resize") : (resize = "null");
+  rBusiness === "pending" ? (resize = "resize") : (resize = "null");
 
   return (
     <section className="login create">
@@ -140,7 +140,7 @@ function Create() {
             <input
               type="checkbox"
               onChange={(e) => {
-                setCheck(e.target.checked);
+                e.target.checked ? setCheck("pending") : setCheck("Normal");
               }}
             />
             <span>For Business</span>
@@ -152,7 +152,7 @@ function Create() {
             {/*______*/}
 
             {/* Address */}
-            {rBusiness && (
+            {rBusiness === "pending" && (
               <div className="Address address">
                 <input
                   required
@@ -180,7 +180,7 @@ function Create() {
             {/*  */}
 
             {/* Lincence Number */}
-            {rBusiness && (
+            {rBusiness === "pending" && (
               <input
                 required
                 value={licence}

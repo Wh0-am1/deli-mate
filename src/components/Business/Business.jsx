@@ -4,6 +4,7 @@ import BList from "../../page/BList";
 import Add from "../Add/Add";
 import History from "../History/History";
 import "./Business.css";
+import Notify from "../Notify/Notify";
 
 function Business() {
   return (
@@ -25,6 +26,7 @@ function Business() {
             </ul>
           </div>
         </div>
+        <Notify />
         <div className="body-business">
           <Routes>
             <Route path="/">

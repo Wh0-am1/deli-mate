@@ -5,6 +5,7 @@ import Filter from "../components/Filter/Filter";
 import Lists from "../components/Lists/Lists";
 import "../components/Filter/Filter.css";
 import { useAuth } from "../contexts/AuthContext";
+import Notify from "../components/Notify/Notify";
 
 let flag;
 
@@ -38,6 +39,7 @@ function Main() {
           <Route path="/" element={<Lists />} />
         </Routes>
       </div>
+      <Notify />
     </section>
   );
 }

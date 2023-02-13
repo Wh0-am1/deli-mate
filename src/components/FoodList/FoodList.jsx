@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./FoodList.css";
 import { useNavigate } from "react-router-dom";
+import { getDataId } from "../../dataManagement";
 
-function FoodList({ name, price, qty, type, id }) {
+function FoodList({ uid, price, qty, type, id }) {
   const navigate = useNavigate();
+  const [name, setName] = useState("");
 
   useEffect(() => {
     setMoveSide("side");
@@ -12,6 +14,13 @@ function FoodList({ name, price, qty, type, id }) {
     setTimeout(() => {
       setHeight("height-pc");
     }, 850);
+
+    const getName = async () => {
+      const dt = await getDataId("users", uid);
+      setName(dt.name);
+    };
+
+    getName();
 
     return () => {
       setMoveSide("null");

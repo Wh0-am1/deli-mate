@@ -6,11 +6,6 @@
   text-decoration: none;
   color: black;
 }
-.Admin .container {
-  width: 80%;
-  margin: auto;
-  padding: 1rem;
-}
 .Admin .navbar h1 {
   color: rgb(69, 61, 61);
   font-family: "Kalam", cursive;
@@ -25,6 +20,8 @@
   padding: 4px 1rem;
   font-size: 1.5rem;
   font-family: "Roboto Mono", monospace;
+  width: 80%;
+  margin: auto;
 }
 .Admin .add-booked {
   width: 40%;
@@ -46,7 +43,7 @@
 .Admin .navbar ul li:active {
   color: rgb(141, 130, 113);
 }
-@media (max-width: 600px) {
+@media (max-width: 1035px) {
   .Admin .navbar {
     flex-direction: column;
   }

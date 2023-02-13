@@ -20,12 +20,12 @@ function Hedear(props) {
                 <Link to={"/Account"}>Account</Link>
               </li>
               <li onClick={props.setWidth}>Filter</li>
-              {role === true && (
+              {role === "Business" && (
                 <li>
                   <Link to={"/Business"}>Business</Link>
                 </li>
               )}
-              {role === "admin" && (
+              {role === "Admin" && (
                 <li>
                   <Link to={"/Admin"}>Admin</Link>
                 </li>
