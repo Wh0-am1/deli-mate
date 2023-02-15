@@ -41,7 +41,6 @@ function Create() {
     const data = {
       rBusiness,
       name,
-      password,
       email,
       phone,
     };

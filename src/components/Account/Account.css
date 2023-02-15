@@ -1,4 +1,4 @@
-.account{
+.account {
   min-height: 100vh;
   background-color: rgb(219, 216, 219);
 }
@@ -11,8 +11,8 @@
   margin: auto;
   position: relative;
 }
-.account .heading{
-  font-family: 'Pacifico', cursive;
+.account .heading {
+  font-family: "Pacifico", cursive;
   font-size: 2.5rem;
   text-align: center;
   animation: infinite move 2s alternate;
@@ -26,7 +26,7 @@
   transition: all 0.3s;
   position: relative;
 }
-.account .scale{
+.account .scale {
   scale: 0;
 }
 .account h1 {
@@ -106,67 +106,67 @@
 .account .card .orders:active {
   color: rgb(91, 87, 87);
 }
-.account .logout{
+.account .logout {
   color: rgb(205, 38, 38);
 }
-.account .logout i{
+.account .logout i {
   margin-left: 5px;
 }
-.account .logout:hover{
+.account .logout:hover {
   color: red;
 }
-.account .feedback-dot{
+.account .feedback-dot {
   z-index: 5;
   position: absolute;
   right: 0;
   top: 2rem;
   padding: 1rem;
 }
-.account .feedback-dot div{
+.account .feedback-dot div {
   width: 5px;
   height: 5px;
   background-color: black;
   margin-top: 3px;
   border-radius: 50%;
 }
-.account .shade{
+.account .shade {
   position: absolute;
   width: 100%;
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 6;
 }
-.account .feedback-btn{
+.account .feedback-btn {
   z-index: 5;
   position: absolute;
   right: -3rem;
   top: 5rem;
-  background-color: rgb(79, 221, 152) ;
+  background-color: rgb(79, 221, 152);
   padding: 0.3rem;
   cursor: pointer;
   transition: all 0.3s;
 }
-.account .feedback-btn:hover{
+.account .feedback-btn:hover {
   border-radius: 10px;
   box-shadow: 0 0 10px black;
 }
-.account .feedback-btn:active{
+.account .feedback-btn:active {
   border-radius: 10px;
   box-shadow: 0 0 10px black;
   scale: 0.8;
 }
-.account .div-field .textarea-report{
+.account .div-field .textarea-report {
   width: 90%;
   height: 80%;
   resize: none;
-   padding: 1rem;
-   position:absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -48%);
+  padding: 1rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -48%);
   border-radius: 15px;
 }
-.account .div-field .exclamation{
+.account .div-field .exclamation {
   position: absolute;
   top: -2.6rem;
   font-size: 3rem;
@@ -176,7 +176,7 @@
   background-color: rgb(65, 130, 148);
   border-radius: 50%;
 }
-.account .div-field .report-submit{
+.account .div-field .report-submit {
   position: absolute;
   bottom: -1rem;
   border: none;
@@ -184,19 +184,19 @@
   width: 100px;
   border-radius: 20px;
   font-size: 1rem;
-  font-family: 'Sofia Sans', sans-serif;
+  font-family: "Sofia Sans", sans-serif;
   transition: all 0.3s;
 }
-.account .div-field .report-submit:active{
+.account .div-field .report-submit:active {
   background-color: rgb(84, 81, 81);
   color: white;
   scale: 1.1;
 }
-.account .div-field .report-submit:hover{
+.account .div-field .report-submit:hover {
   background-color: rgb(84, 81, 81);
   color: white;
 }
-.account .div-field{
+.account .div-field {
   width: 50%;
   height: 60%;
   background-color: rgba(255, 255, 255, 0.5);
@@ -235,36 +235,36 @@
     transform: translate(0, -100px);
   }
 }
-@media(max-width:812px){
-  .account .ac-container{
+@media (max-width: 812px) {
+  .account .ac-container {
     flex-direction: column;
     justify-content: center;
   }
-  .account .heading{
+  .account .heading {
     margin-top: 1rem;
     animation: none;
   }
 }
-@media(max-width:381px){
-  .account .ac-container{
+@media (max-width: 381px) {
+  .account .ac-container {
     scale: 80%;
   }
 }
 
-@keyframes move{
-  0%{
-      transform: translate(0);
+@keyframes move {
+  0% {
+    transform: translate(0);
   }
-  25%{
-      transform: translate(-5px,-5px);
+  25% {
+    transform: translate(-5px, -5px);
   }
-  50%{
-      transform: translate(-5px,5px);
+  50% {
+    transform: translate(-5px, 5px);
   }
-  75%{
-      transform: translate(5px,5px);
+  75% {
+    transform: translate(5px, 5px);
   }
-  100%{
-      transform: translate(5px,-5px);
+  100% {
+    transform: translate(5px, -5px);
   }
 }

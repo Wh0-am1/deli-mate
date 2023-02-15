@@ -1,6 +1,5 @@
 import { collection, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { getData, getDataId } from "../../dataManagement";
 import { db } from "../../firebase-config";
 import FoodList from "../FoodList/FoodList";
 import "./Lists.css";
@@ -45,7 +44,7 @@ function Lists() {
           </div>
         )}
         {data.map((elt) => {
-          console.log(elt);
+          // console.log(elt);
           return (
             <FoodList
               uid={elt.uid}

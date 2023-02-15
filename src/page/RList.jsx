@@ -14,11 +14,12 @@ function RList() {
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const List = [];
+      setLoad(true);
       querySnapshot.forEach((doc) => {
         List.push({ id: doc.id, ...doc.data() });
-        setData(List);
         setLoad(false);
       });
+      setData(List);
     });
 
     return unsubscribe;

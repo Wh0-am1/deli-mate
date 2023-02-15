@@ -1,23 +1,26 @@
+import { collection, onSnapshot } from "firebase/firestore";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Booking from "../components/Booking/Booking";
 import Review from "../components/Review/Review";
 import SelfReview from "../components/SelfReview/SelfReview";
-import { getDataId } from "../dataManagement";
+import { getData, getDataId } from "../dataManagement";
+import { db } from "../firebase-config";
 
 let height;
 
 function Order() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [reviews, setReviews] = useState([]);
 
   const getName = async (id) => {
     const dt = await getDataId("users", id);
     dt && setName(dt.name);
   };
 
-  const getData = async (id) => {
+  const getList = async (id) => {
     const dt = await getDataId("Foodlistings", id);
     if (dt === null) {
       navigate("*");
@@ -28,10 +31,32 @@ function Order() {
 
   useEffect(() => {
     try {
-      getData(id);
+      getList(id);
     } catch (e) {
       console.log(e);
     }
+    const unsubscribe = onSnapshot(
+      collection(db, "reviews"),
+      (snapshot) => {
+        const List = [];
+        snapshot.docs.forEach((doc) => {
+          /*getDataId("users", doc.data().user_Id)
+            .then((res) => {
+              List.push({ name: res.name, id: doc.id, ...doc.data() });
+              setLoad(false);
+              setData(List);
+            })
+            .catch((e) => console.log(e));*/
+          List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
+          setReviews(List);
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    return unsubscribe;
   }, []);
 
   const [repClick, setRipClick] = useState(false);
@@ -53,14 +78,17 @@ function Order() {
         />
       </div>
       <div className="reviews">
-        <Review />
-        <Review />
-        <Review />
-        <Review />
-        <Review />
-        <Review />
-        <Review />
-        <Review />
+        {reviews.map((elt) => {
+          return (
+            <Review
+              msg={elt.msg}
+              id={elt.id}
+              uid={elt.user_Id}
+              date={elt.time}
+              rate={elt.rate}
+            />
+          );
+        })}
       </div>
       <div className="reviewing">
         <SelfReview sid={data.user_Id} />

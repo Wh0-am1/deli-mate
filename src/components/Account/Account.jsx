@@ -51,6 +51,7 @@ function Account() {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log(downloadURL);
             setImg(downloadURL);
           });
         }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { dataEntry } from "../../dataManagement";
+import PayBox from "../PayBox/PayBox";
 import "./Booking.css";
 
 const n = [];
@@ -23,6 +24,7 @@ function Booking({
   nPrice,
 }) {
   const { currentUser } = useAuth();
+  const [box, setBox] = useState(false);
 
   function reportHandling() {
     if (report) {
@@ -31,11 +33,21 @@ function Booking({
     } else console.log("nothing");
   }
 
+  const [quantity, setQuantity] = useState("");
   const [block, setBlock] = useState(false);
   const [report, setReport] = useState("");
   repClick ? (shadow = "report-bg") : (shadow = "null");
   return (
     <section className={`Booking`}>
+      {box && (
+        <PayBox
+          box={box}
+          setBox={setBox}
+          qty={quantity}
+          sid={sid}
+          uid={currentUser.uid}
+        />
+      )}
       <div
         className={`report-field ${shadow}`}
         onClick={() => setRepClick(block)}
@@ -44,7 +56,7 @@ function Booking({
       </div>
       {repClick && (
         <div className={`div-field`}>
-          <i class="fa-solid fa-circle-exclamation exclamation"></i>
+          <i className="fa-solid fa-circle-exclamation exclamation"></i>
           <div className="field">
             <textarea
               className="textarea-report"
@@ -94,7 +106,12 @@ function Booking({
             <form className="form" onSubmit={(e) => e.preventDefault()}>
               <div className="booking-qty">
                 <span>Quantity</span>
-                <select className="qty-select">
+                <select
+                  value={quantity}
+                  required
+                  className="qty-select"
+                  onChange={(e) => setQuantity(e.target.value)}
+                >
                   <option value="">--quantity--</option>
                   {select(qty).map((num, index) => (
                     <option value={num} key={index}>
@@ -103,7 +120,13 @@ function Booking({
                   ))}
                 </select>
               </div>
-              <button>Book Now</button>
+              <button
+                onClick={() => {
+                  quantity && setBox(!box);
+                }}
+              >
+                Book Now
+              </button>
             </form>
           </div>
           <div className="book-details">

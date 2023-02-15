@@ -1,8 +1,18 @@
 import React from "react";
+import { useState } from "react";
+import { updateData } from "../../dataManagement";
 import "./Request.css";
 
-function Request({ lid, ph, ads, pc, name }) {
-  console.log(lid, ph, ads, pc, name);
+function Request({ lid, ph, ads, pc, name, id }) {
+  const [data, setData] = useState("");
+  function Update() {
+    let v;
+    data ? (v = "Business") : (v = "Normal");
+    updateData("users", id, {
+      rBusiness: v,
+    });
+  }
+
   return (
     <section className="request">
       <div className="container">
@@ -26,13 +36,13 @@ function Request({ lid, ph, ads, pc, name }) {
           </div>
           <div className="mode flex">
             <label>Request : </label>
-            <select>
+            <select onChange={(e) => setData(e.target.value)}>
               <option value="">requested</option>
-              <option value="verified">verified</option>
-              <option value="rejected">rejected</option>
+              <option value={true}>verified</option>
+              <option value={false}>rejected</option>
             </select>
           </div>
-          <button>submit</button>
+          <button onClick={Update}>submit</button>
         </div>
       </div>
     </section>

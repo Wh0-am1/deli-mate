@@ -60,6 +60,9 @@
   font-family: "Mukta", sans-serif;
   font-weight: 600;
 }
+.booked-list .container h1 {
+  text-transform: uppercase;
+}
 
 .b-list {
   display: flex;

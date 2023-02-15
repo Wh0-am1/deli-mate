@@ -1,32 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { getDataId } from "../../dataManagement";
 import "./Review.css";
 
-function Review() {
+function Review({ msg, id, uid, date, rate }) {
+  const [name, setName] = useState("");
+
+  const time = date.slice(0, 15);
+
+  const getName = async (id) => {
+    const dt = await getDataId("users", id);
+    dt && setName(dt.name);
+  };
+
+  useEffect(() => {
+    getName(uid);
+  }, []);
   return (
     <section className="review">
       <div className="container">
         <div className="profile">
           <div className="img-outline">
-            <img src="./img/default_profile.png" alt="profile" />
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/deli-mate-21d62.appspot.com/o/1676397239564default_profile.png?alt=media&token=43a676ee-17f4-4363-8104-8777b03eb9b9"
+              alt="profile"
+            />
           </div>
-          <label>Name</label>
+          <label>{name}</label>
         </div>
         <div className="rating">
-          <label>Rating : 5</label>
+          <label>Rating : {rate}</label>
         </div>
         <div className="date-time">
-          <p>Reviewed on 12 January 2023</p>
+          <p>Reviewed on {time}</p>
         </div>
         <div className="review-msg">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati
-            error, nihil dolorum numquam praesentium excepturi deleniti quasi,
-            nostrum quia laborum dolorem placeat ex ullam aliquid delectus Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Libero modi,
-            beatae, nulla neque, quasi minus veritatis amet tempore eligendi
-            iste quidem repudiandae! Fugiat minus eum aspernatur commodi
-            mollitia in dicta.
-          </p>
+          <p>{msg}</p>
         </div>
       </div>
     </section>

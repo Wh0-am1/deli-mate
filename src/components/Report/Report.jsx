@@ -1,8 +1,37 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
+import { deleteData, getDataId, updateData } from "../../dataManagement";
 import "./Report.css";
 
-function Report() {
+function Report({ sid, uid, time, msg, did }) {
+  const [uName, setUname] = useState("");
+  const [sName, setSname] = useState("");
+
+  useEffect(() => {
+    console.log(time);
+    // const date =
+    // console.log(date);
+    function test() {}
+    const getUname = async () => {
+      const dt = await getDataId("users", uid);
+      setUname(dt.name);
+    };
+    const getSname = async () => {
+      const dt = await getDataId("users", sid);
+      setSname(dt.name);
+    };
+
+    getUname();
+    getSname();
+  }, []);
+
+  function Update() {
+    updateData("users", sid, {
+      rBusiness: "Normal",
+    });
+  }
+
   const [heightW, setHieghtW] = useState("height");
   const [heightA, setHieghtA] = useState("height");
   return (
@@ -10,18 +39,13 @@ function Report() {
       <div className="container">
         <div className="report-body">
           <div className="heading">
-            <h1>SourceName</h1>
-            <i>Username</i>
+            <h1>{sName}</h1>
+            <i>{uName}</i>
           </div>
           <div className="date">
             <p>01/02/2023 12:10pm</p>
           </div>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Consectetur voluptatem dolore soluta vitae, facere amet? Doloribus,
-            vero nostrum magnam officia exercitationem voluptatem sequi sit. A
-            laudantium consequatur corrupti quis tempore.
-          </p>
+          <p className="msg">{msg}</p>
           <div className="btn">
             <button
               className="warning"
@@ -51,9 +75,20 @@ function Report() {
             <button>sent</button>
           </div>
           <div className={`action-div ${heightA}`}>
-            <p>Are you sure to remove his business account ?</p>
-            <i className="fa-solid fa-check"></i>
-            <i className="fa-solid fa-xmark"></i>
+            <p>Are you sure to remove this business account ?</p>
+            <i
+              className="fa-solid fa-check"
+              onClick={() => {
+                Update();
+                deleteData("report", did);
+              }}
+            ></i>
+            <i
+              className="fa-solid fa-xmark"
+              onClick={() => {
+                deleteData("report", did);
+              }}
+            ></i>
           </div>
         </div>
       </div>
