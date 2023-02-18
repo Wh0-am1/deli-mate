@@ -28,6 +28,7 @@
   resize: none;
   border-radius: 15px 0 0 15px;
   padding: 0.3rem;
+  line-height: 1.2rem;
 }
 .notify .warn-notify .reason {
   display: flex;
@@ -66,6 +67,6 @@
 }
 .msg-high {
   width: 230px;
-  height: 150px;
+  height: 180px;
   visibility: visible;
 }

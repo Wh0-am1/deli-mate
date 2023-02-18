@@ -10,6 +10,19 @@
   height: 700px;
   background-color: rgb(100, 140, 127);
 }
+.Booking .food-type {
+  font-size: 1.5rem;
+}
+.Booking .food-type h1 {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.Booking .food-type {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 .Booking .container {
   width: 80%;
   min-height: 100%;

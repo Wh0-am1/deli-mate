@@ -29,6 +29,7 @@
 .Admin .navbar ul {
   display: flex;
   align-items: center;
+  gap: 1rem;
   justify-content: space-evenly;
 }
 .Admin .navbar ul li {

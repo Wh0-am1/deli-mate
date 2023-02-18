@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "../../contexts/AuthContext";
 import { dataEntry } from "../../dataManagement";
 import "./Add.css";
@@ -10,20 +11,13 @@ function Add() {
   const [nPrice, setNprice] = useState("");
   const [type, setType] = useState("");
   const { currentUser } = useAuth();
-  const [go, setGo] = useState("no-go");
-  function launch_toast() {
-    setGo("go");
-    setTimeout(function () {
-      setGo("no-go");
-    }, 3000);
-  }
 
   const submitHandling = async (e) => {
     e.preventDefault();
-    const data = { price, qty, nPrice, type };
+    const data = { price, qty, nPrice, type, flag: true };
     try {
-      await dataEntry(data, "Foodlistings", currentUser.uid);
-      launch_toast();
+      dataEntry(data, "Foodlistings", currentUser.uid);
+      toast.success("added successfully");
     } catch (e) {
       console.log(e);
     }
@@ -34,14 +28,7 @@ function Add() {
   };
   return (
     <section className="add">
-      <div className={`success ${go}`} onClick={() => setGo("no-go")}>
-        <div className="icon">
-          <i className="fa-regular fa-circle-check"></i>
-        </div>
-        <div className="msg">
-          <p>submit successfully...</p>
-        </div>
-      </div>
+      <ToastContainer theme="colored" autoClose="3000" />
       <form onSubmit={submitHandling}>
         <div className="container">
           <div className="add-body">
@@ -83,7 +70,12 @@ function Add() {
                 <option value="non-veg">non-veg</option>
               </select>
             </div>
-            <button>Submit</button>
+            <button
+              className="btn"
+              onClick={() => toast.success("added successfully")}
+            >
+              Submit
+            </button>
           </div>
         </div>
       </form>

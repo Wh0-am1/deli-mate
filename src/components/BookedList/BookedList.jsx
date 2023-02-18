@@ -1,17 +1,26 @@
 import React from "react";
+import { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getDataId } from "../../dataManagement";
+import { toast, ToastContainer } from "react-toastify";
+import { deleteData, getDataId, updateData } from "../../dataManagement";
 import "./BookedList.css";
 
-function BookedList({ bookId, qty, uid }) {
+function BookedList({ bookId, qty, uid, id }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [bid, setBid] = useState();
+  const close = useRef();
 
   function submitHandling(e) {
     e.preventDefault();
-    console.log(bid === String(bookId));
+    if (bid === String(bookId)) {
+      toast.success("order success");
+      setTimeout(() => (close.current.style.scale = "0"), 800);
+      setTimeout(() => updateData("orders", id, { status: "complete" }), 1500);
+    } else {
+      toast.error("incorrect");
+    }
   }
 
   useEffect(() => {
@@ -26,7 +35,11 @@ function BookedList({ bookId, qty, uid }) {
   return (
     <section className="booked-list">
       <div className="container">
-        <div className="body-list">
+        <ToastContainer theme="colored" autoClose="1500" />
+        <div className="body-list" ref={close}>
+          <div className="yesOrNo">
+            <div className="conatiner-yesorno"></div>
+          </div>
           <h1>{name}</h1>
           <div className="qty flex">
             <label>Quantity : </label>
@@ -44,7 +57,7 @@ function BookedList({ bookId, qty, uid }) {
                 onChange={(e) => setBid(e.target.value)}
               />
               <div className="btn">
-                <button>
+                <button type="submit">
                   <i className="fa-solid fa-check"></i>
                 </button>
               </div>

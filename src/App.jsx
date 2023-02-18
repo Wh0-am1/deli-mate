@@ -10,20 +10,25 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Main from "./page/Main";
 import Order from "./page/Order";
 import RoleManage from "./RoleManage";
+import { useState } from "react";
 
 function App() {
+  const [logged, setLogged] = useState(false);
   return (
     <div className="App">
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={<Home log={logged} setLogged={setLogged} />}
+          />
+          <Route path="/login" element={<Login setLogged={setLogged} />} />
           <Route path="/Create" element={<Create />} />
           <Route
-            path="/Home"
+            path="/Home/*"
             element={
               <PrivateRoute>
-                <Main />
+                <Main log={logged} setLogged={setLogged} />
               </PrivateRoute>
             }
           />
@@ -39,7 +44,7 @@ function App() {
             path="/Account"
             element={
               <PrivateRoute>
-                <Account />
+                <Account setLogged={setLogged} />
               </PrivateRoute>
             }
           />

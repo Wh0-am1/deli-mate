@@ -1,4 +1,4 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import Feedback from "../components/Feedback/Feedback";
 import "../components/Feedback/Feedback.css";
@@ -10,14 +10,14 @@ function FList() {
 
   useEffect(() => {
     setLoad(true);
+    const q = query(collection(db, "feedback"), where("flag", "==", true));
     const unsubscribe = onSnapshot(
-      collection(db, "feedback"),
+      q,
       (snapshot) => {
         setLoad(true);
         const List = [];
         snapshot.docs.forEach((doc) => {
           List.push({
-            did: doc.id,
             uid: doc.data().user_Id,
             id: doc.id,
             ...doc.data(),
@@ -46,7 +46,7 @@ function FList() {
             uid={elt.user_Id}
             time={elt.time}
             msg={elt.feedback}
-            did={elt.did}
+            id={elt.id}
           />
         );
       })}

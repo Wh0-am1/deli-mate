@@ -1,24 +1,43 @@
 import React from "react";
-import '../Account/Account.css'
+import { useState } from "react";
+import { useEffect } from "react";
+import { dateTime, getDataId } from "../../dataManagement";
+import "../Account/Account.css";
 
-function OrderHistory() {
+function OrderHistory({ sid, date, price, qty, type, bId, status }) {
+  const [name, setName] = useState("");
+  const [time, setTime] = useState("");
+  useEffect(() => {
+    const getName = async () => {
+      const dt = await getDataId("users", sid);
+      setName(dt.name);
+    };
+    setTime(dateTime(date));
+    getName();
+  }, []);
   return (
     <section className="order-history">
       <div className="history-details">
         <p>
-          <label>Date and Tme :</label> 01/02/2023 4:35pm
+          <label>Date and Tme :</label> {time}
         </p>
         <p>
-          <label>Source :</label> Deli-Mate
+          <label>Source :</label> {name}
         </p>
         <p>
-          <label>Generated Number :</label> 78459658
+          <label>Generated Number :</label> {bId}
         </p>
         <p>
-          <label>Quantitity :</label> 4
+          <label>Type :</label> {type}
         </p>
         <p>
-          <label>Price : </label> 450/-
+          <label>Quantitity :</label> {qty}
+        </p>
+        <p>
+          <label>Price : </label> {`${price}/-`}
+        </p>
+        <p>
+          <label>Status : </label> {status}
         </p>
       </div>
     </section>

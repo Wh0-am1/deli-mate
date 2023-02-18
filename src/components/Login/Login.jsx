@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import "./login.css";
 
-function Login() {
+function Login({ setLogged }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [eyeSize1, setEyeSize1] = useState("hide-eye");
@@ -20,6 +20,7 @@ function Login() {
     try {
       await login(email, password);
       navigate("/Home", { replace: true });
+      setLogged(true);
     } catch (error) {
       setColor("err");
       if (error.message.search("invalid-email") > 0) {

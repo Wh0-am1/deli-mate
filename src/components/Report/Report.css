@@ -4,6 +4,15 @@
   width: 80%;
   margin: auto;
   padding: 0.5rem;
+  position: relative;
+}
+.warn-replay {
+  background-color: rgb(242, 244, 234);
+  padding: 1rem;
+  box-sizing: border-box;
+}
+.warn-replay label {
+  font-weight: 600;
 }
 .RepList {
   padding-top: 1rem;
@@ -57,9 +66,10 @@
 .Report-list .container .report-body .btn button:active {
   scale: 0.8;
 }
-.Report-list .container .warning {
+.Report-list .container textarea.warning {
   resize: none;
   width: 95%;
+  padding: 0.5rem;
 }
 .Report-list .container .msg-area {
   display: flex;

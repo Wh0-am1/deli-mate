@@ -2,6 +2,15 @@
   min-height: 100vh;
   background-color: rgb(219, 216, 219);
 }
+.account .noData {
+  text-align: center;
+  margin-top: 1rem;
+}
+.account .fa-pen-to-square {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
 .account .ac-container {
   display: flex;
   min-height: 100vh;
@@ -41,6 +50,9 @@
   top: -2rem;
   left: 1rem;
   border: 1px solid black;
+}
+.profile-name {
+  text-transform: uppercase;
 }
 .account .card {
   display: flex;

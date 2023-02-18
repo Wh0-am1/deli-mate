@@ -1,39 +1,44 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase-config";
 import FoodList from "../FoodList/FoodList";
 import "./Lists.css";
 
-function Lists() {
+function Lists({ search }) {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
 
-  useEffect(() => {
-    setLoad(true);
-    const unsubscribe = onSnapshot(
-      collection(db, "Foodlistings"),
-      (snapshot) => {
-        const List = [];
-        snapshot.docs.forEach((doc) => {
-          /*getDataId("users", doc.data().user_Id)
-            .then((res) => {
-              List.push({ name: res.name, id: doc.id, ...doc.data() });
-              setLoad(false);
-              setData(List);
-            })
-            .catch((e) => console.log(e));*/
-          List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
-          setLoad(false);
+  {
+    useEffect(() => {
+      setLoad(true);
+      console.log(search);
+      const q = query(collection(db, "Foodlistings"), search);
+      // const q = query(collection(db, "Foodlistings"), where("user_Id", "!=", null));
+      const unsubscribe = onSnapshot(
+        q,
+        (snapshot) => {
+          console.log("keri");
+          const List = [];
+          snapshot.docs.forEach((doc) => {
+            List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
+            setLoad(false);
+          });
+          console.log(List);
           setData(List);
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-
-    return unsubscribe;
-  }, []);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      return unsubscribe;
+    }, [search]);
+  }
 
   return (
     <section className="main-body">

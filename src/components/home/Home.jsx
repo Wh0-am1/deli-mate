@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
+import { ToastContainer, toast } from "react-toastify";
 
-function Home() {
+function Home({ log, setLogged }) {
+  useEffect(() => {
+    log && toast.error("Logged Out");
+    console.log(log);
+
+    return setLogged(false);
+  }, []);
   return (
     <section className="start">
+      <ToastContainer theme="colored" autoClose="3000" position="bottom-left" />
       <div className="container">
         <div className="head">
           <h3>Deli-Mate</h3>

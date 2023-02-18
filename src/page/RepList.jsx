@@ -1,4 +1,4 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import Report from "../components/Report/Report";
 import "../components/Report/Report.css";
@@ -10,13 +10,13 @@ function RepList() {
 
   useEffect(() => {
     setLoad(true);
+    const q = query(collection(db, "report"), where("flag", "==", true));
     const unsubscribe = onSnapshot(
-      collection(db, "report"),
+      q,
       (snapshot) => {
         setLoad(true);
         const List = [];
         snapshot.docs.forEach((doc) => {
-          console.log(doc.id);
           List.push({
             did: doc.id,
             uid: doc.data().user_Id,
@@ -49,6 +49,8 @@ function RepList() {
             time={elt.time}
             msg={elt.report}
             did={elt.did}
+            res={elt.reason}
+            key={elt.did}
           />
         );
       })}

@@ -5,12 +5,14 @@ import "./Review.css";
 
 function Review({ msg, id, uid, date, rate }) {
   const [name, setName] = useState("");
+  const [img, setImg] = useState("");
 
   const time = date.slice(0, 15);
 
   const getName = async (id) => {
     const dt = await getDataId("users", id);
     dt && setName(dt.name);
+    dt && setImg(dt.pic);
   };
 
   useEffect(() => {
@@ -21,10 +23,7 @@ function Review({ msg, id, uid, date, rate }) {
       <div className="container">
         <div className="profile">
           <div className="img-outline">
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/deli-mate-21d62.appspot.com/o/1676397239564default_profile.png?alt=media&token=43a676ee-17f4-4363-8104-8777b03eb9b9"
-              alt="profile"
-            />
+            <img src={img ? img : "/img/default_profile.png"} alt="profile" />
           </div>
           <label>{name}</label>
         </div>

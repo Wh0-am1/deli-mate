@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { dataEntry } from "../../dataManagement";
+import { dataEntry, dataEntryId } from "../../dataManagement";
 import PayBox from "../PayBox/PayBox";
 import "./Booking.css";
 
@@ -22,13 +22,14 @@ function Booking({
   type,
   sid,
   nPrice,
+  pic,
 }) {
   const { currentUser } = useAuth();
   const [box, setBox] = useState(false);
 
   function reportHandling() {
     if (report) {
-      dataEntry({ report, sid }, "report", currentUser.uid);
+      dataEntry({ report, sid, flag: true }, "report", currentUser.uid);
       setReport("");
     } else console.log("nothing");
   }
@@ -46,6 +47,8 @@ function Booking({
           qty={quantity}
           sid={sid}
           uid={currentUser.uid}
+          price={nPrice}
+          type={type}
         />
       )}
       <div
@@ -95,13 +98,14 @@ function Booking({
         </div>
         <div className="outline">
           <div className="img-book">
-            <img
-              src="https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=694&q=80"
-              alt="img"
-            />
+            <img src={pic ? pic : "/img/default_profile.png"} alt="img" />
             <div className="total-qty">
               <span>Package Left!!!</span>
               <h1>{qty}</h1>
+            </div>
+            <div className="food-type">
+              <span>Type</span>
+              <h1>{type}</h1>
             </div>
             <form className="form" onSubmit={(e) => e.preventDefault()}>
               <div className="booking-qty">

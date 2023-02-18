@@ -18,6 +18,7 @@ function Order() {
   const getName = async (id) => {
     const dt = await getDataId("users", id);
     dt && setName(dt.name);
+    dt && setImg(dt.pic);
   };
 
   const getList = async (id) => {
@@ -40,13 +41,6 @@ function Order() {
       (snapshot) => {
         const List = [];
         snapshot.docs.forEach((doc) => {
-          /*getDataId("users", doc.data().user_Id)
-            .then((res) => {
-              List.push({ name: res.name, id: doc.id, ...doc.data() });
-              setLoad(false);
-              setData(List);
-            })
-            .catch((e) => console.log(e));*/
           List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
           setReviews(List);
         });
@@ -62,6 +56,7 @@ function Order() {
   const [repClick, setRipClick] = useState(false);
   const [data, setData] = useState("");
   const [name, setName] = useState("");
+  const [img, setImg] = useState("");
   repClick ? (height = "bg-height") : (height = "null");
   return (
     <section className={`order ${height}`}>
@@ -75,6 +70,7 @@ function Order() {
           sid={data.user_Id}
           nPrice={data.nPrice}
           name={name}
+          pic={img}
         />
       </div>
       <div className="reviews">
@@ -86,6 +82,7 @@ function Order() {
               uid={elt.user_Id}
               date={elt.time}
               rate={elt.rate}
+              key={elt.id}
             />
           );
         })}

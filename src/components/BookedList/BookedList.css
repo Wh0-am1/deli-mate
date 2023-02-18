@@ -8,8 +8,10 @@
   gap: 1rem;
   background-color: rgb(163, 214, 178);
   max-width: 200px;
+  position: relative;
   padding: 1rem;
   border-radius: 15px;
+  transition: all 0.3s;
 }
 .booked-list .container .gNumber {
   position: relative;

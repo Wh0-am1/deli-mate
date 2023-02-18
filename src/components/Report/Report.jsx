@@ -1,25 +1,36 @@
+import { serverTimestamp } from "firebase/firestore";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { deleteData, getDataId, updateData } from "../../dataManagement";
+import { dateTime, getDataId, updateData } from "../../dataManagement";
 import "./Report.css";
 
-function Report({ sid, uid, time, msg, did }) {
+function Report({ sid, uid, time, msg, id, res }) {
   const [uName, setUname] = useState("");
   const [sName, setSname] = useState("");
+  const [warn, setWarn] = useState("");
+  const [heightW, setHieghtW] = useState("height");
+  const [heightA, setHieghtA] = useState("height");
+  const [date, setDate] = useState("");
 
+  function WarnHandling() {
+    setWarn("");
+    updateData("report", id, {
+      warn: warn,
+      warnTime: Date(serverTimestamp()).toString(),
+      flag: false,
+      wFlag: true,
+    });
+  }
   useEffect(() => {
-    console.log(time);
-    // const date =
-    // console.log(date);
-    function test() {}
+    setDate(dateTime(time));
     const getUname = async () => {
       const dt = await getDataId("users", uid);
-      setUname(dt.name);
+      setUname(dt?.name);
     };
     const getSname = async () => {
       const dt = await getDataId("users", sid);
-      setSname(dt.name);
+      setSname(dt?.name);
     };
 
     getUname();
@@ -32,8 +43,6 @@ function Report({ sid, uid, time, msg, did }) {
     });
   }
 
-  const [heightW, setHieghtW] = useState("height");
-  const [heightA, setHieghtA] = useState("height");
   return (
     <section className="Report-list">
       <div className="container">
@@ -43,9 +52,15 @@ function Report({ sid, uid, time, msg, did }) {
             <i>{uName}</i>
           </div>
           <div className="date">
-            <p>01/02/2023 12:10pm</p>
+            <p>{date}</p>
           </div>
           <p className="msg">{msg}</p>
+          {res && (
+            <div className="warn-replay">
+              <label>Replay : </label>
+              <p>{res} </p>
+            </div>
+          )}
           <div className="btn">
             <button
               className="warning"
@@ -70,23 +85,36 @@ function Report({ sid, uid, time, msg, did }) {
               Action
             </button>
           </div>
-          <div className={`msg-area ${heightW}`}>
-            <textarea className="warning"></textarea>
-            <button>sent</button>
-          </div>
+          <form>
+            <div className={`msg-area ${heightW}`}>
+              <textarea
+                className="warning"
+                required
+                value={warn}
+                onChange={(e) => setWarn(e.target.value)}
+              ></textarea>
+              <button onClick={WarnHandling}>sent</button>
+            </div>
+          </form>
           <div className={`action-div ${heightA}`}>
             <p>Are you sure to remove this business account ?</p>
             <i
               className="fa-solid fa-check"
               onClick={() => {
                 Update();
-                deleteData("report", did);
+                updateData("report", id, {
+                  cancelTime: Date(serverTimestamp()).toString(),
+                  flag: false,
+                });
               }}
             ></i>
             <i
               className="fa-solid fa-xmark"
               onClick={() => {
-                deleteData("report", did);
+                updateData("report", id, {
+                  cancelTime: Date(serverTimestamp()).toString(),
+                  flag: false,
+                });
               }}
             ></i>
           </div>
