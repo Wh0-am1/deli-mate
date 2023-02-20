@@ -1,8 +1,9 @@
 import React from "react";
+import { useRef } from "react";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "../../contexts/AuthContext";
-import { dataEntry } from "../../dataManagement";
+import { dataEntry, updateData } from "../../dataManagement";
 import "./Add.css";
 
 function Add() {
@@ -11,10 +12,15 @@ function Add() {
   const [nPrice, setNprice] = useState("");
   const [type, setType] = useState("");
   const { currentUser } = useAuth();
+  const [lat, setLat] = useState("");
+  const [lon, setLon] = useState("");
+  const [flag, setFlag] = useState(false);
+
+  const disp = useRef();
 
   const submitHandling = async (e) => {
     e.preventDefault();
-    const data = { price, qty, nPrice, type, flag: true };
+    const data = { price, qty, nPrice, type, flag: true, nQty: 0 };
     try {
       dataEntry(data, "Foodlistings", currentUser.uid);
       toast.success("added successfully");
@@ -22,16 +28,90 @@ function Add() {
       console.log(e);
     }
     setNprice("");
-    setPrice("");
+    setPrice([]);
     setQty("");
     setType("");
   };
+  function coordHandling() {
+    console.log(lon, lat);
+    updateData("users", currentUser.uid, { lat: lat, lon: lon });
+    toast.success("added successfully");
+    setLat("");
+    setLon("");
+  }
+
+  const successCallback = (position) => {
+    setLat(position.coords.latitude);
+    setLon(position.coords.longitude);
+    toast.success("geo-location successfully");
+  };
+
+  const errorCallback = (error) => {
+    console.log(error);
+  };
+
   return (
     <section className="add">
       <ToastContainer theme="colored" autoClose="3000" />
       <form onSubmit={submitHandling}>
         <div className="container">
           <div className="add-body">
+            <div className="location-div display" ref={disp}>
+              <i
+                className="fa-solid fa-xmark"
+                onClick={() => {
+                  disp.current.classList.add("display");
+                }}
+              ></i>
+              {flag && <p className="err">please fill these two</p>}
+              <label>Latitue : </label>
+              <input
+                type="number"
+                value={lat}
+                onChange={(e) => setLat(e.target.value)}
+              />
+              <label>Longitude :</label>
+              <input
+                type="number"
+                value={lon}
+                onChange={(e) => setLon(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  if (!lat || !lon) {
+                    setFlag(true);
+                  } else {
+                    setFlag(false);
+                    coordHandling();
+                  }
+                }}
+              >
+                Submit
+              </button>
+              <div className="current-location">
+                <label>current Location : </label>
+                <i
+                  className="fa-solid fa-map-location-dot"
+                  onClick={() => {
+                    navigator.geolocation.getCurrentPosition(
+                      successCallback,
+                      errorCallback
+                    );
+                  }}
+                ></i>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="location"
+              onClick={() => {
+                disp.current.classList.remove("display");
+              }}
+            >
+              map
+            </button>
+
             <div className="heading">
               <h1>Add Details</h1>
             </div>
@@ -40,7 +120,7 @@ function Add() {
               <input
                 type="number"
                 required
-                onChange={(e) => setQty(e.target.value)}
+                onChange={(e) => setQty(Number(e.target.value))}
                 value={qty}
               />
             </div>
@@ -49,7 +129,7 @@ function Add() {
               <input
                 type="number"
                 required
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => setPrice(Number(e.target.value))}
                 value={price}
               />
             </div>
@@ -70,12 +150,7 @@ function Add() {
                 <option value="non-veg">non-veg</option>
               </select>
             </div>
-            <button
-              className="btn"
-              onClick={() => toast.success("added successfully")}
-            >
-              Submit
-            </button>
+            <button className="btn">Submit</button>
           </div>
         </div>
       </form>

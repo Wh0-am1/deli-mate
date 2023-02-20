@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { dataEntry, dataEntryId } from "../../dataManagement";
+import { db } from "../../firebase-config";
 import PayBox from "../PayBox/PayBox";
 import "./Booking.css";
 
@@ -23,9 +25,15 @@ function Booking({
   sid,
   nPrice,
   pic,
+  nQty,
+  id,
+  address,
 }) {
   const { currentUser } = useAuth();
   const [box, setBox] = useState(false);
+  const [rate, setRate] = useState("");
+  const [lat, setLat] = useState("0");
+  const [lon, setLon] = useState("0");
 
   function reportHandling() {
     if (report) {
@@ -34,10 +42,25 @@ function Booking({
     } else console.log("nothing");
   }
 
+  useEffect(() => {
+    let unsub;
+    if (sid) {
+      onSnapshot(doc(db, "users", sid), (docs) => {
+        setRate(Number(docs.data().rate).toFixed(2));
+        docs.data().lat && setLat(docs.data().lat);
+        docs.data().lon && setLon(docs.data().lon);
+      });
+    }
+    console.log(lon, lat);
+    return unsub;
+  }, [sid]);
+
   const [quantity, setQuantity] = useState("");
   const [block, setBlock] = useState(false);
   const [report, setReport] = useState("");
+  const [coord, setCoords] = useState({ lat: "11.231287", lon: "76.043298" });
   repClick ? (shadow = "report-bg") : (shadow = "null");
+
   return (
     <section className={`Booking`}>
       {box && (
@@ -45,10 +68,12 @@ function Booking({
           box={box}
           setBox={setBox}
           qty={quantity}
+          nQty={nQty}
           sid={sid}
           uid={currentUser.uid}
           price={nPrice}
           type={type}
+          id={id}
         />
       )}
       <div
@@ -101,7 +126,7 @@ function Booking({
             <img src={pic ? pic : "/img/default_profile.png"} alt="img" />
             <div className="total-qty">
               <span>Package Left!!!</span>
-              <h1>{qty}</h1>
+              <h1>{qty - nQty}</h1>
             </div>
             <div className="food-type">
               <span>Type</span>
@@ -117,7 +142,7 @@ function Booking({
                   onChange={(e) => setQuantity(e.target.value)}
                 >
                   <option value="">--quantity--</option>
-                  {select(qty).map((num, index) => (
+                  {select(Number(qty) - Number(nQty)).map((num, index) => (
                     <option value={num} key={index}>
                       {num}
                     </option>
@@ -138,7 +163,7 @@ function Booking({
               <h1>{name}</h1>
               <i className="line"></i>
               <div className="rating">
-                <h1>5</h1>
+                <h1>{rate}</h1>
                 <i className="fa-sharp fa-solid fa-star"></i>
               </div>
             </div>
@@ -151,11 +176,16 @@ function Booking({
               <div className="location-title">
                 <h1>Location</h1>
               </div>
-              <iframe
-                title="google-map"
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15662.154162031573!2d76.07399945!3d11.0731828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1674023125366!5m2!1sen!2sin"
-                loading="lazy"
-              ></iframe>
+              {
+                <iframe
+                  title="google-map"
+                  loading="lazy"
+                  src={`https://maps.google.com/maps?q=${lat},${lon}&hl=en&z=14&output=embed`}
+                ></iframe>
+              }
+              <div className="addrs">
+                <p>{address}</p>
+              </div>
             </div>
           </div>
         </div>

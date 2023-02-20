@@ -1,7 +1,9 @@
 import {
   collection,
   getDocs,
+  limit,
   onSnapshot,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -10,26 +12,29 @@ import { db } from "../../firebase-config";
 import FoodList from "../FoodList/FoodList";
 import "./Lists.css";
 
-function Lists({ search }) {
+function Lists({ search, Max, Sort, Type }) {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
 
   {
     useEffect(() => {
       setLoad(true);
-      console.log(search);
-      const q = query(collection(db, "Foodlistings"), search);
+      const q = query(
+        collection(db, "Foodlistings"),
+        search,
+        where("price", ...Max),
+        ...Type,
+        ...Sort
+      );
       // const q = query(collection(db, "Foodlistings"), where("user_Id", "!=", null));
       const unsubscribe = onSnapshot(
         q,
         (snapshot) => {
-          console.log("keri");
           const List = [];
           snapshot.docs.forEach((doc) => {
             List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
             setLoad(false);
           });
-          console.log(List);
           setData(List);
         },
         (error) => {
@@ -37,7 +42,7 @@ function Lists({ search }) {
         }
       );
       return unsubscribe;
-    }, [search]);
+    }, [search, Max, Type, Sort]);
   }
 
   return (
@@ -58,6 +63,7 @@ function Lists({ search }) {
               type={elt.type}
               key={elt.id}
               id={elt.id}
+              pic={elt.pic}
             />
           );
         })}

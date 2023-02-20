@@ -6,6 +6,8 @@ import { getDataId } from "../../dataManagement";
 function FoodList({ uid, price, qty, type, id }) {
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [img, setImg] = useState("");
+  const [rate, setRate] = useState("");
 
   useEffect(() => {
     setMoveSide("side");
@@ -17,7 +19,9 @@ function FoodList({ uid, price, qty, type, id }) {
 
     const getName = async () => {
       const dt = await getDataId("users", uid);
+      setImg(dt.pic);
       setName(dt.name);
+      setRate(dt.rate);
     };
 
     getName();
@@ -40,7 +44,7 @@ function FoodList({ uid, price, qty, type, id }) {
         }}
       >
         <div className="img-bs">
-          <img src="./img/img2.jpg" alt="img" />
+          <img src={img ? img : "./img/default_profile.png"} alt="img" />
         </div>
         <div className="description">
           <h1>{name}</h1>
@@ -48,7 +52,7 @@ function FoodList({ uid, price, qty, type, id }) {
             <h1>Price : {`${price}/-`}</h1>
             <p className="qty">quantity : {`${qty}`}</p>
             <p> Type : {`${type}`}</p>
-            <p id="rating">rating : No</p>
+            <p id="rating">rating : {Number(rate).toFixed(2)}</p>
           </div>
         </div>
       </div>

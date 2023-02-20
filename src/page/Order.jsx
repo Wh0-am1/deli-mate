@@ -1,11 +1,11 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot } from "firebase/firestore";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Booking from "../components/Booking/Booking";
 import Review from "../components/Review/Review";
 import SelfReview from "../components/SelfReview/SelfReview";
-import { getData, getDataId } from "../dataManagement";
+import { getDataId } from "../dataManagement";
 import { db } from "../firebase-config";
 
 let height;
@@ -19,23 +19,26 @@ function Order() {
     const dt = await getDataId("users", id);
     dt && setName(dt.name);
     dt && setImg(dt.pic);
-  };
-
-  const getList = async (id) => {
-    const dt = await getDataId("Foodlistings", id);
-    if (dt === null) {
-      navigate("*");
-    }
-    dt && setData(dt);
-    dt && getName(dt.user_Id);
+    dt && setAddress(dt.address);
   };
 
   useEffect(() => {
+    let unsub;
     try {
-      getList(id);
+      unsub = onSnapshot(doc(db, "Foodlistings", id), (docs) => {
+        if (!docs.data()) {
+          navigate("*");
+        }
+        setData({ id: docs.id, ...docs.data() });
+        getName(docs.data().user_Id);
+      });
     } catch (e) {
       console.log(e);
     }
+    return unsub;
+  }, []);
+
+  useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "reviews"),
       (snapshot) => {
@@ -56,6 +59,7 @@ function Order() {
   const [repClick, setRipClick] = useState(false);
   const [data, setData] = useState("");
   const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
   const [img, setImg] = useState("");
   repClick ? (height = "bg-height") : (height = "null");
   return (
@@ -65,12 +69,15 @@ function Order() {
           setRepClick={setRipClick}
           repClick={repClick}
           price={data.price}
-          qty={data.qty}
+          qty={Number(data.qty)}
+          nQty={Number(data.nQty)}
           type={data.type}
           sid={data.user_Id}
           nPrice={data.nPrice}
           name={name}
           pic={img}
+          id={data.id}
+          address={address}
         />
       </div>
       <div className="reviews">

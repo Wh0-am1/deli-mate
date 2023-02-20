@@ -10,6 +10,8 @@ function Request({ lid, ph, ads, pc, name, id }) {
     data ? (v = "Business") : (v = "Normal");
     updateData("users", id, {
       rBusiness: v,
+      rate: 4,
+      nRate: 1,
     });
   }
 

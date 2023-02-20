@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { where } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
@@ -8,7 +8,8 @@ import {
   getDataId,
   updateData,
 } from "../../dataManagement";
-import { db, storage } from "../../firebase-config";
+import { storage } from "../../firebase-config";
+import EditAccount from "../EditAccount/EditAccount";
 import OrderHistory from "../OrderHistory/OrderHistory";
 import "./Account.css";
 
@@ -24,13 +25,15 @@ function Account({ setLogged }) {
   const { currentUser, logout, role } = useAuth();
   const [data, setData] = useState({});
   const [history, setHistory] = useState([]);
-  useEffect(() => {
-    const q = [];
-    q.push(where("price", "==", "30"));
-    q.push(where("type", "==", "veg"));
-    dataWhere("Foodlistings", q);
-    // console.log(q);
+  const [edit, setEdit] = useState("scale");
+  const [update, setUpdate] = useState([]);
 
+  useEffect(() => {
+    console.log(update);
+    update[0] && updateData("users", currentUser.uid, ...update);
+  }, [update]);
+
+  useEffect(() => {
     setScale("null");
     const profile = async () => {
       try {
@@ -53,10 +56,12 @@ function Account({ setLogged }) {
     historyData();
     profile();
   }, []);
+
   useEffect(() => {
+    console.log(file);
+
     const uploadFile = () => {
-      const name = new Date().getTime() + file.name;
-      const storageRef = ref(storage, name);
+      const storageRef = ref(storage, currentUser.uid);
       console.log(storageRef);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -150,17 +155,21 @@ function Account({ setLogged }) {
         </div>
         {data && (
           <div className={`container ${scale}`}>
+            <EditAccount
+              edit={edit}
+              setEdit={setEdit}
+              setUpdate={setUpdate}
+              setImage={setFile}
+            />
             <div className="card">
               <div className="profile-pic">
                 <img
                   src={img ? img : "./img/default_profile.png"}
                   alt="profile_pic"
                 />
-                <i className="fa-solid fa-pen-to-square" />
-                <input
-                  type="file"
-                  id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
+                <i
+                  className="fa-solid fa-pen-to-square"
+                  onClick={() => setEdit("null")}
                 />
               </div>
               <h1 className="profile-name">{data.name}</h1>

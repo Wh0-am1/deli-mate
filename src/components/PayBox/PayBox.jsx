@@ -2,10 +2,10 @@ import { serverTimestamp } from "firebase/firestore";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { dataEntry } from "../../dataManagement";
+import { dataEntry, updateData } from "../../dataManagement";
 import "./PayBox.css";
 
-function PayBox({ box, setBox, qty, sid, uid, type, price }) {
+function PayBox({ box, setBox, qty, sid, uid, type, price, nQty, id }) {
   const [scale, setScale] = useState("scale");
   const [width, setWidth] = useState("width-0");
   const [display, setDisplay] = useState("display");
@@ -13,6 +13,7 @@ function PayBox({ box, setBox, qty, sid, uid, type, price }) {
   const [bookId, setBookId] = useState("");
 
   const setOrder = () => {
+    updateData("Foodlistings", id, { nQty: Number(nQty) + Number(qty) });
     dataEntry(
       { qty, bookId, sid, type, price, status: "booked" },
       "orders",

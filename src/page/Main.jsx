@@ -7,7 +7,7 @@ import "../components/Filter/Filter.css";
 import { useAuth } from "../contexts/AuthContext";
 import { where } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
-import { dataWhere } from "../dataManagement";
+import { dataWhere, removeArrayDup } from "../dataManagement";
 import Notify from "../components/Notify/Notify";
 
 let flag;
@@ -16,7 +16,12 @@ function Main({ log, setLogged }) {
   const { currentUser } = useAuth();
   const [data, setData] = useState([]);
   const [search, setSearch] = useState([]);
-  // const [qry, setQry] = useState([]);
+  const [qry, setQry] = useState([]);
+  const [filter, setFilter] = useState([]);
+  const [max, setMax] = useState(["!=", null]);
+  const [sort, setSort] = useState([]);
+  const [type, setType] = useState([]);
+  const [rate, setRate] = useState([]);
 
   useEffect(() => {
     log && toast.success("Logged In");
@@ -24,6 +29,10 @@ function Main({ log, setLogged }) {
 
     return setLogged(false);
   }, []);
+  useEffect(() => {
+    const List = removeArrayDup(search, filter, rate);
+    List[0] && setQry(where("user_Id", "in", List));
+  }, [search, filter, rate]);
 
   const widthHandling = () => {
     if (flag) {
@@ -47,8 +56,6 @@ function Main({ log, setLogged }) {
 
   const [width, setWidth] = useState("zero");
 
-  console.log(search);
-
   return (
     <section className="Main">
       <Hedear setWidth={widthHandling} setSearch={setSearch} />
@@ -59,10 +66,27 @@ function Main({ log, setLogged }) {
           position="bottom-left"
         />
         <div className="filter">
-          <Filter width={width} setWidth={widthHandling} />
+          <Filter
+            width={width}
+            setWidth={widthHandling}
+            setFilter={setFilter}
+            Max={setMax}
+            Type={setType}
+            Sort={setSort}
+            st={sort}
+            mx={max}
+            tp={type}
+            ft={filter}
+            rt={rate}
+            setRt={setRate}
+            setQry={setQry}
+          />
         </div>
         <Routes>
-          <Route path="/" element={<Lists search={search} />} />
+          <Route
+            path="/"
+            element={<Lists search={qry} Max={max} Sort={sort} Type={type} />}
+          />
         </Routes>
       </div>
       {data[0] && (

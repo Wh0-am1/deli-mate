@@ -13,7 +13,8 @@ function Report({ sid, uid, time, msg, id, res }) {
   const [heightA, setHieghtA] = useState("height");
   const [date, setDate] = useState("");
 
-  function WarnHandling() {
+  function WarnHandling(e) {
+    e.preventDefault();
     setWarn("");
     updateData("report", id, {
       warn: warn,

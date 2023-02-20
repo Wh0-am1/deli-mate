@@ -1,20 +1,26 @@
 import { where } from "firebase/firestore";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { dataWhere } from "../../dataManagement";
 import "./Header.css";
 
 function Hedear(props) {
   const { role } = useAuth();
-  const navigate = useNavigate();
   const [data, setData] = useState("");
 
   async function clickHandling() {
     const List = await dataWhere("users", [where("name", "==", data)]);
 
-    List[0] && props.setSearch(where("user_Id", "==", List[0].id));
-    !List[0] && props.setSearch(where("user_Id", "==", "abc"));
+    const id = List.map((value) => {
+      return value.id;
+    });
+
+    id[0] && props.setSearch(id);
+    if (!id[0]) {
+      console.log("keri");
+      data && props.setSearch(["abs"]);
+    }
   }
 
   return (

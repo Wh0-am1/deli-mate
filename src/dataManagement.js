@@ -72,32 +72,6 @@ export async function dataWhere(cln, condition) {
   }
 }
 
-/*export async function dataWhereReal(cln, condition) {
-  const List = [];
-  try {
-    const q = query(collection(db, cln), ...condition);
-    const unsubscribe = onSnapshot(
-      q,
-      (snapshot) => {
-        const List = [];
-        snapshot.docs.forEach((doc) => {
-          List.push({
-            uid: doc.data().user_Id,
-            id: doc.id,
-            ...doc.data(),
-          });
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    return { unsubscribe, List };
-  } catch (e) {
-    console.log("error", e);
-  }
-}*/
-
 export function dateTime(date) {
   let time = Number(date.slice(16, 18));
   if (time < 12) {
@@ -105,4 +79,28 @@ export function dateTime(date) {
   } else {
     return date.slice(0, 15) + "  " + (time - 12) + date.slice(18, 21) + " pm";
   }
+}
+
+export function removeArrayDup(arr1 = [], arr2 = [], arr3 = []) {
+  console.log(arr1, arr2, arr3);
+
+  if (!arr1[0]) {
+    if (arr2[0]) {
+      const t = arr2;
+      arr2 = arr3;
+      arr1 = t;
+    } else if (arr3[0]) {
+      arr1 = arr3;
+    }
+  } else if (!arr3[0] && arr2[0]) {
+    arr2 = arr3;
+  }
+
+  if (arr2[0]) {
+    arr1 = arr1.filter((x) => arr2.indexOf(x) !== -1);
+  } else if (arr3[0]) {
+    arr1 = arr1.filter((x) => arr3.indexOf(x) !== -1);
+  }
+
+  return arr1;
 }

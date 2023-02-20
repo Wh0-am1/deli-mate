@@ -16,7 +16,6 @@
   color: white;
   box-shadow: -5px 5px 10px black;
   position: relative;
-  overflow: scroll;
 }
 .FoodList .img-bs img {
   width: 90%;
@@ -38,6 +37,7 @@
 }
 .description {
   width: 70%;
+  overflow: scroll;
 }
 .opacity {
   opacity: 0;

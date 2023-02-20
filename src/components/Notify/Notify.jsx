@@ -12,9 +12,7 @@ function Notify({ warn, id, report }) {
     e.preventDefault();
     size === "msg-low" ? setSize("msg-high") : setSize("msg-low");
     setTimeout(() => {
-      close.current.style.display = "none";
       if (sent) {
-        console.log(sent);
         updateData("report", id, { flag: true, reason: reason });
       }
       updateData("report", id, { wFlag: false });

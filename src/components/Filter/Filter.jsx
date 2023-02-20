@@ -1,11 +1,25 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { orderBy, where } from "firebase/firestore";
 import React from "react";
 import { useState } from "react";
-import { db } from "../../firebase-config";
+import { dataWhere } from "../../dataManagement";
 import SearchForFilter from "../SearchForFilter/SearchForFilter";
 import "./Filter.css";
 
-function Filter({ width, setWidth, setFilter, setId }) {
+function Filter({
+  width,
+  setWidth,
+  setFilter,
+  Max,
+  Type,
+  Sort,
+  st,
+  mx,
+  tp,
+  ft,
+  setQry,
+  rt,
+  setRt,
+}) {
   const [pincode, setPincode] = useState("");
   const [max, setMax] = useState("");
   const [rating, setRating] = useState([]);
@@ -13,18 +27,24 @@ function Filter({ width, setWidth, setFilter, setId }) {
   const [sorting, setSorting] = useState("");
 
   async function submitHandling() {
-    const q = query(collection(db, "users"), where("pincode", "==", pincode));
-    setRating(q);
-
-    const querySnapshot = await getDocs(rating);
-    const List = [];
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      List.push(doc.id);
-      console.log(List);
-      setId(List);
+    const List = await dataWhere("users", [where("pincode", "==", pincode)]);
+    const id = List.map((value) => {
+      return value.id;
     });
-    setFilter({ max, rating, type, sorting });
+    const rList = await dataWhere("users", [
+      where("rate", ">=", Number(rating)),
+    ]);
+    const Rid = rList.map((value) => {
+      return value.id;
+    });
+    id[0] && setFilter(id);
+    max && Max(["<=", Number(max)]);
+    type && Type([where("type", "==", type)]);
+    sorting && Sort([orderBy("price", sorting)]);
+    Rid[0] && setRt(Rid);
+    if (!id[0]) {
+      pincode && setFilter(["abs"]);
+    }
   }
 
   return (
@@ -71,9 +91,29 @@ function Filter({ width, setWidth, setFilter, setId }) {
               onChange={(e) => setSorting(e.target.value)}
             >
               <option value="">--Sorting--</option>
-              <option value="Low">Low to High</option>
-              <option value="High">High to Low</option>
+              <option value="asc">Low to High</option>
+              <option value="desc">High to Low</option>
             </select>
+          </div>
+        </div>
+        <div className="clear-filter">
+          <div
+            className="clear-max"
+            onClick={() => {
+              Max(["!=", null]);
+              setMax("");
+              Type([]);
+              setType("");
+              setRt([]);
+              setRating("");
+              Sort([]);
+              setSorting("");
+              setQry([]);
+              setPincode("");
+              setFilter([]);
+            }}
+          >
+            clear-all-filters
           </div>
         </div>
         <button onClick={submitHandling}>ok</button>

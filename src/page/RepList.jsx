@@ -48,7 +48,7 @@ function RepList() {
             uid={elt.user_Id}
             time={elt.time}
             msg={elt.report}
-            did={elt.did}
+            id={elt.id}
             res={elt.reason}
             key={elt.did}
           />
