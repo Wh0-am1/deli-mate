@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./FoodList.css";
 import { useNavigate } from "react-router-dom";
 import { getDataId } from "../../dataManagement";
+import { useAuth } from "../../contexts/AuthContext";
 
 function FoodList({ uid, price, qty, type, id }) {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [img, setImg] = useState("");
   const [rate, setRate] = useState("");
+
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     setMoveSide("side");
@@ -37,16 +40,18 @@ function FoodList({ uid, price, qty, type, id }) {
   const [height, setHeight] = useState("null");
   return (
     <section className="FoodList">
-      <div
-        className={`container ${moveSide} ${opacity} ${height}`}
-        onClick={() => {
-          navigate(`/Order/${id}`);
-        }}
-      >
+      <div className={`container ${moveSide} ${opacity} ${height}`}>
+        {uid === currentUser.uid && <i className="fa-solid fa-trash-can"></i>}
+        <div className="sureOrNot">{/* <p>Are You Sure ?</p> */}</div>
         <div className="img-bs">
           <img src={img ? img : "./img/default_profile.png"} alt="img" />
         </div>
-        <div className="description">
+        <div
+          className="description"
+          onClick={() => {
+            navigate(`/Order/${id}`);
+          }}
+        >
           <h1>{name}</h1>
           <div className="details">
             <h1>Price : {`${price}/-`}</h1>

@@ -26,14 +26,15 @@ function Lists({ search, Max, Sort, Type }) {
         ...Type,
         ...Sort
       );
-      // const q = query(collection(db, "Foodlistings"), where("user_Id", "!=", null));
       const unsubscribe = onSnapshot(
         q,
         (snapshot) => {
           const List = [];
           snapshot.docs.forEach((doc) => {
-            List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
-            setLoad(false);
+            if (Number(doc.data().qty) != Number(doc.data().nQty)) {
+              List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
+              setLoad(false);
+            }
           });
           setData(List);
         },
@@ -54,7 +55,6 @@ function Lists({ search, Max, Sort, Type }) {
           </div>
         )}
         {data.map((elt) => {
-          // console.log(elt);
           return (
             <FoodList
               uid={elt.uid}

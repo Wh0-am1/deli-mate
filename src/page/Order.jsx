@@ -1,4 +1,4 @@
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,6 +14,7 @@ function Order() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [reviews, setReviews] = useState([]);
+  const [sid, setSid] = useState("");
 
   const getName = async (id) => {
     const dt = await getDataId("users", id);
@@ -29,6 +30,7 @@ function Order() {
         if (!docs.data()) {
           navigate("*");
         }
+        setSid(docs.data().user_Id);
         setData({ id: docs.id, ...docs.data() });
         getName(docs.data().user_Id);
       });
@@ -39,22 +41,26 @@ function Order() {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, "reviews"),
-      (snapshot) => {
-        const List = [];
-        snapshot.docs.forEach((doc) => {
-          List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
-          setReviews(List);
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    let unsub;
+    if (sid) {
+      const q = query(collection(db, "reviews"), where("sid", "==", sid));
+      unsub = onSnapshot(
+        q,
+        (snapshot) => {
+          const List = [];
+          snapshot.docs.forEach((doc) => {
+            List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
+            setReviews(List);
+          });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
 
-    return unsubscribe;
-  }, []);
+    return unsub;
+  }, [sid]);
 
   const [repClick, setRipClick] = useState(false);
   const [data, setData] = useState("");

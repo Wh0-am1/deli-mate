@@ -32,8 +32,8 @@ function Booking({
   const { currentUser } = useAuth();
   const [box, setBox] = useState(false);
   const [rate, setRate] = useState("");
-  const [lat, setLat] = useState("0");
-  const [lon, setLon] = useState("0");
+  const [lat, setLat] = useState("");
+  const [lon, setLon] = useState("");
 
   function reportHandling() {
     if (report) {
@@ -51,14 +51,12 @@ function Booking({
         docs.data().lon && setLon(docs.data().lon);
       });
     }
-    console.log(lon, lat);
     return unsub;
   }, [sid]);
 
   const [quantity, setQuantity] = useState("");
   const [block, setBlock] = useState(false);
   const [report, setReport] = useState("");
-  const [coord, setCoords] = useState({ lat: "11.231287", lon: "76.043298" });
   repClick ? (shadow = "report-bg") : (shadow = "null");
 
   return (
@@ -180,7 +178,11 @@ function Booking({
                 <iframe
                   title="google-map"
                   loading="lazy"
-                  src={`https://maps.google.com/maps?q=${lat},${lon}&hl=en&z=14&output=embed`}
+                  src={
+                    lat && lon
+                      ? `https://maps.google.com/maps?q=${lat},${lon}&hl=en&z=14&output=embed`
+                      : ``
+                  }
                 ></iframe>
               }
               <div className="addrs">
