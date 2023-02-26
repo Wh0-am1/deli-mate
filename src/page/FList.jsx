@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import Feedback from "../components/Feedback/Feedback";
 import "../components/Feedback/Feedback.css";
 import { db } from "../firebase-config";
+import ReactLoading from "react-loading";
 
 function FList() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
+  const [found, setFound] = useState(false);
 
   useEffect(() => {
     setLoad(true);
@@ -24,6 +26,8 @@ function FList() {
           });
           setLoad(false);
         });
+        !List[0] && setLoad(false);
+        !List[0] && setFound(true);
         setData(List);
       },
       (error) => {
@@ -35,9 +39,19 @@ function FList() {
   }, []);
   return (
     <section className="FList">
-      {load && (
+      {found && (
         <div className="load">
           <h1>No Data Found</h1>
+        </div>
+      )}
+      {load && (
+        <div className="react-load">
+          <ReactLoading
+            type={"spinningBubbles"}
+            color={"rgb(63 55 55)"}
+            height={"30%"}
+            width={"30%"}
+          />
         </div>
       )}
       {data.map((elt) => {

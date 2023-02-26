@@ -53,3 +53,10 @@
 .Feedback .container .replay .sent .fa-paper-plane {
   rotate: 50deg;
 }
+.FList .react-load {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  right: 7%;
+  top: 40%;
+}

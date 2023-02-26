@@ -5,10 +5,11 @@ import Filter from "../components/Filter/Filter";
 import Lists from "../components/Lists/Lists";
 import "../components/Filter/Filter.css";
 import { useAuth } from "../contexts/AuthContext";
-import { where } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
-import { dataWhere, removeArrayDup } from "../dataManagement";
+import { removeArrayDup } from "../dataManagement";
 import Notify from "../components/Notify/Notify";
+import { db } from "../firebase-config";
 
 let flag;
 
@@ -32,6 +33,7 @@ function Main({ log, setLogged }) {
   useEffect(() => {
     const List = removeArrayDup(search, filter, rate);
     List[0] && setQry(where("user_Id", "in", List));
+    console.log({ search, filter, rate });
   }, [search, filter, rate]);
 
   const widthHandling = () => {
@@ -44,14 +46,19 @@ function Main({ log, setLogged }) {
     }
   };
   useEffect(() => {
-    const notify = async () => {
-      const List = await dataWhere("report", [
-        where("wFlag", "==", true),
-        where("sid", "==", currentUser.uid),
-      ]);
+    const q = query(
+      collection(db, "report"),
+      where("wFlag", "==", true),
+      where("sid", "==", currentUser.uid)
+    );
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const List = [];
+      querySnapshot.forEach((doc) => {
+        List.push({ id: doc.id, ...doc.data() });
+      });
       setData(List);
-    };
-    notify();
+    });
+    return unsubscribe;
   }, []);
 
   const [width, setWidth] = useState("zero");
@@ -82,12 +89,14 @@ function Main({ log, setLogged }) {
             setQry={setQry}
           />
         </div>
-        <Routes>
-          <Route
-            path="/"
-            element={<Lists search={qry} Max={max} Sort={sort} Type={type} />}
-          />
-        </Routes>
+        {currentUser.emailVerified && (
+          <Routes>
+            <Route
+              path="/"
+              element={<Lists search={qry} Max={max} Sort={sort} Type={type} />}
+            />
+          </Routes>
+        )}
       </div>
       {data[0] && (
         <Notify id={data[0].id} report={data[0].report} warn={data[0].warn} />

@@ -1,6 +1,7 @@
 import { where } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   dataEntry,
@@ -29,8 +30,10 @@ function Account({ setLogged }) {
   const [update, setUpdate] = useState([]);
 
   useEffect(() => {
-    console.log(update);
-    update[0] && updateData("users", currentUser.uid, ...update);
+    update[0] &&
+      updateData("users", currentUser.uid, ...update).then(() =>
+        toast.success("update successfully")
+      );
   }, [update]);
 
   useEffect(() => {
@@ -90,6 +93,7 @@ function Account({ setLogged }) {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setImg(downloadURL);
             updateData("users", currentUser.uid, { pic: downloadURL });
+            toast.success("profile updated");
           });
         }
       );
@@ -115,6 +119,7 @@ function Account({ setLogged }) {
   }
   return (
     <section className="account">
+      <ToastContainer theme="colored" autoClose="3000" position="top-right" />
       {shade && <div className="shade" onClick={() => setShade(!shade)}></div>}
       {shade && (
         <div className={`div-field`}>

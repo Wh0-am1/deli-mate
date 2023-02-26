@@ -1,7 +1,7 @@
 ::-webkit-scrollbar {
   display: none;
 }
-.FoodList .fa-trash-can {
+.FoodList .penTool {
   color: black;
   position: absolute;
   right: 1rem;
@@ -10,10 +10,10 @@
   transition: all 0.3s;
   font-size: 1.3rem;
 }
-.FoodList .fa-trash-can:hover {
+.FoodList .penTool:hover {
   color: rgb(169, 164, 164);
 }
-.FoodList .fa-trash-can:active {
+.FoodList .penTool:active {
   scale: 0.8;
 }
 .FoodList .container {
@@ -30,12 +30,14 @@
   color: white;
   box-shadow: -5px 5px 10px black;
   position: relative;
+  height: 300px;
 }
 .FoodList .img-bs img {
-  width: 90%;
+  width: 95%;
   height: 85%;
   border-radius: 15px;
   border: 2px solid white;
+  margin-right: 3px;
 }
 .FoodList .description > h1 {
   font-family: "Secular One", sans-serif;
@@ -58,13 +60,6 @@
 }
 .opacity {
   opacity: 0;
-  height: 100vh;
-}
-.height-px {
-  height: 1000px;
-}
-.height-pc {
-  height: 300px;
 }
 .side {
   opacity: 1;
@@ -91,6 +86,71 @@
 }
 .list-body {
   display: flex;
+}
+.edit-once {
+  position: absolute;
+  transition: all 0.4s;
+  background-color: #538875;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: 25;
+  border-radius: 15px;
+}
+.edit-once .fa-xmark {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+.edit-once .fa-xmark:hover {
+  opacity: 0.7;
+}
+.edit-once .fa-xmark:active {
+  scale: 0.8;
+}
+.width-once-0 {
+  width: 0%;
+}
+.width-once-100 {
+  width: 100%;
+}
+.edit-once .once-container {
+  width: 80%;
+  margin: auto;
+}
+.edit-once .once-container input,
+.edit-once .once-container select,
+.edit-once .once-container button {
+  padding-left: 1.2rem;
+  box-sizing: border-box;
+  border-radius: 15px;
+  height: 30px;
+  border: none;
+  color: black;
+  box-shadow: 0 0 10px black;
+  font-size: 1rem;
+}
+.edit-once .once-container button {
+  font-size: 1.2rem;
+  transition: all 0.3s;
+}
+.edit-once .once-container button:hover {
+  opacity: 0.8;
+}
+.edit-once .once-container button:active {
+  scale: 0.8;
+}
+.edit-once .once-container div {
+  margin-top: 1rem;
+}
+.edit-once .once-container label {
+  color: white;
+}
+.edit-once .once-container div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 @media (max-width: 694px) {
   .FoodList .container {

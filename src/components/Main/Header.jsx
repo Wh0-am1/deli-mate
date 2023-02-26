@@ -1,8 +1,8 @@
-import { where } from "firebase/firestore";
+import { orderBy, startAt, where } from "firebase/firestore";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { dataWhere } from "../../dataManagement";
+import { dataWhere, getData } from "../../dataManagement";
 import "./Header.css";
 
 function Hedear(props) {
@@ -10,15 +10,23 @@ function Hedear(props) {
   const [data, setData] = useState("");
 
   async function clickHandling() {
-    const List = await dataWhere("users", [where("name", "==", data)]);
+    // const List = await dataWhere("users", [where("name", "==", data)]);
+    const List = await getData("users");
+    // const L = await dataWhere("users", [where("name", "!=", null)]);
+    // const L = await dataWhere("users", [orderBy("name"), startAt("n")]);
 
-    const id = List.map((value) => {
+    const reg = new RegExp(data, "i");
+
+    const sh = List.filter((e) => {
+      return e.name.search(reg) == 0;
+    });
+
+    const id = sh.map((value) => {
       return value.id;
     });
 
     id[0] && props.setSearch(id);
     if (!id[0]) {
-      console.log("keri");
       data && props.setSearch(["abs"]);
     }
   }

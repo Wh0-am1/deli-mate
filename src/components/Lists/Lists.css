@@ -4,6 +4,7 @@
   min-height: 100vh;
   transition: all 0.5s;
   width: 100%;
+  position: relative;
 }
 .main-body .contain-body {
   width: 90%;
@@ -15,7 +16,15 @@
   grid-column-gap: 2rem;
   padding-bottom: 2rem;
 }
-
+.main-body .load-react {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 25%;
+  right: -40%;
+  /* transform: translate(-10%, -30%); */
+  z-index: 10;
+}
 @media (max-width: 1230px) {
   .main-body .contain-body {
     display: flex;

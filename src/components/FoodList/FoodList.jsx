@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getDataId } from "../../dataManagement";
 import { useAuth } from "../../contexts/AuthContext";
 
-function FoodList({ uid, price, qty, type, id }) {
+function FoodList({ uid, price, qty, type, id, eFlag }) {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [img, setImg] = useState("");
@@ -13,12 +13,9 @@ function FoodList({ uid, price, qty, type, id }) {
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    setMoveSide("side");
-    setOpacity("null");
-    setHeight("height-px");
     setTimeout(() => {
-      setHeight("height-pc");
-    }, 850);
+      setOpacity("null");
+    }, 500);
 
     const getName = async () => {
       const dt = await getDataId("users", uid);
@@ -30,19 +27,48 @@ function FoodList({ uid, price, qty, type, id }) {
     getName();
 
     return () => {
-      setMoveSide("null");
       setOpacity("opacity");
     };
   }, []);
 
-  const [moveSide, setMoveSide] = useState("null");
   const [opacity, setOpacity] = useState("opacity");
-  const [height, setHeight] = useState("null");
+  const [width, setWidth] = useState("width-once-0");
   return (
     <section className="FoodList">
-      <div className={`container ${moveSide} ${opacity} ${height}`}>
-        {uid === currentUser.uid && <i className="fa-solid fa-trash-can"></i>}
-        <div className="sureOrNot">{/* <p>Are You Sure ?</p> */}</div>
+      <div className={`container  ${opacity} `}>
+        {currentUser.uid === uid && eFlag && (
+          <i
+            className="fa-solid fa-pen penTool"
+            onClick={() => setWidth("width-once-100")}
+          ></i>
+        )}
+        <div className={`edit-once ${width}`}>
+          <i
+            className="fa-solid fa-xmark"
+            onClick={() => setWidth("width-once-0")}
+          ></i>
+          <div className="once-container">
+            <div>
+              <label>Price : </label>
+              <input type="number" />
+            </div>
+            <div>
+              <label>Quantitiy : </label>
+              <input type="number" />
+            </div>
+            <div>
+              <label>Type : </label>
+              <select>
+                <option value="">select</option>
+                <option value="veg">veg</option>
+                <option value="non-veg">non-veg</option>
+              </select>
+            </div>
+            <div>
+              <button>Update</button>
+            </div>
+          </div>
+        </div>
         <div className="img-bs">
           <img src={img ? img : "./img/default_profile.png"} alt="img" />
         </div>

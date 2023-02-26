@@ -4,6 +4,7 @@
   bottom: 1rem;
   display: flex;
   flex-direction: row;
+  z-index: 20;
 }
 .notify .fa-comment-dots {
   font-size: 2rem;

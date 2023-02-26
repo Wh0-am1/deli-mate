@@ -29,7 +29,7 @@ function SelfReview({ sid }) {
   }, []);
 
   function reviewHandling() {
-    if (rate === "" && msg === "") console.log("nothing");
+    if (rate === "" || msg === "") console.log("nothing");
     else {
       const newNumRatings = Number(nRate) + 1;
       const oldRatingTotal = Number(rt) * Number(nRate);

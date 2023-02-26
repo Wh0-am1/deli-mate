@@ -20,7 +20,7 @@ function Add() {
 
   const submitHandling = async (e) => {
     e.preventDefault();
-    const data = { price, qty, nPrice, type, flag: true, nQty: 0 };
+    const data = { price, qty, nPrice, type, flag: true, nQty: 0, eFlag: true };
     try {
       dataEntry(data, "Foodlistings", currentUser.uid);
       toast.success("added successfully");

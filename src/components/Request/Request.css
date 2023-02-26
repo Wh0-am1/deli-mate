@@ -9,6 +9,9 @@
   border-radius: 20px;
   width: 100%;
 }
+.request {
+  transition: all 0.3s;
+}
 .request .container .request-list .flex {
   display: flex;
   flex-direction: row;
@@ -69,6 +72,14 @@
 }
 .request .container .request-list button:active {
   scale: 0.8;
+}
+.RList .container .react-load,
+.RepList .react-load {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  right: 7%;
+  top: 40%;
 }
 @media (max-width: 1519px) {
   .RList .container {

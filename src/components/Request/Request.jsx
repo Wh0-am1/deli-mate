@@ -1,22 +1,28 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { updateData } from "../../dataManagement";
 import "./Request.css";
 
-function Request({ lid, ph, ads, pc, name, id }) {
+function Request({ lid, ph, ads, pc, name, id, ud }) {
+  const scale = useRef();
   const [data, setData] = useState("");
   function Update() {
     let v;
-    data ? (v = "Business") : (v = "Normal");
-    updateData("users", id, {
-      rBusiness: v,
-      rate: 4,
-      nRate: 1,
-    });
+    scale.current.style.scale = 0;
+    setTimeout(() => {
+      data ? (v = "Business") : (v = "Normal");
+      updateData("users", id, {
+        rBusiness: v,
+        rate: 4,
+        nRate: 1,
+      })
+        .then(ud)
+        .catch((e) => console.log(e, "error aane"));
+    }, 300);
   }
 
   return (
-    <section className="request">
+    <section className="request" ref={scale}>
       <div className="container">
         <div className="request-list">
           <h1>{name}</h1>

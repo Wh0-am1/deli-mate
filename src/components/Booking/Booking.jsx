@@ -6,8 +6,8 @@ import { db } from "../../firebase-config";
 import PayBox from "../PayBox/PayBox";
 import "./Booking.css";
 
-const n = [];
 const select = (num) => {
+  const n = [];
   for (let i = 1; i <= num; i++) {
     n.push(i);
   }
@@ -130,31 +130,31 @@ function Booking({
               <span>Type</span>
               <h1>{type}</h1>
             </div>
-            <form className="form" onSubmit={(e) => e.preventDefault()}>
-              <div className="booking-qty">
-                <span>Quantity</span>
-                <select
-                  value={quantity}
-                  required
-                  className="qty-select"
-                  onChange={(e) => setQuantity(e.target.value)}
+            {qty !== nQty && (
+              <form className="form" onSubmit={(e) => e.preventDefault()}>
+                <div className="booking-qty">
+                  <span>Quantity</span>
+                  <select
+                    value={quantity}
+                    required
+                    className="qty-select"
+                    onChange={(e) => setQuantity(e.target.value)}
+                  >
+                    <option value="">--quantity--</option>
+                    {select(Number(qty) - Number(nQty)).map((num, index) => (
+                      <option value={num}>{num}</option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  onClick={() => {
+                    quantity && setBox(!box);
+                  }}
                 >
-                  <option value="">--quantity--</option>
-                  {select(Number(qty) - Number(nQty)).map((num, index) => (
-                    <option value={num} key={index}>
-                      {num}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <button
-                onClick={() => {
-                  quantity && setBox(!box);
-                }}
-              >
-                Book Now
-              </button>
-            </form>
+                  Book Now
+                </button>
+              </form>
+            )}
           </div>
           <div className="book-details">
             <div className="head-rate">

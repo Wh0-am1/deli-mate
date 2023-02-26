@@ -31,9 +31,10 @@ function Filter({
     const id = List.map((value) => {
       return value.id;
     });
-    const rList = await dataWhere("users", [
-      where("rate", ">=", Number(rating)),
-    ]);
+    let rList = [];
+    if (rating[0]) {
+      rList = await dataWhere("users", [where("rate", ">=", Number(rating))]);
+    }
     const Rid = rList.map((value) => {
       return value.id;
     });
@@ -41,7 +42,8 @@ function Filter({
     max && Max(["<=", Number(max)]);
     type && Type([where("type", "==", type)]);
     sorting && Sort([orderBy("price", sorting)]);
-    Rid[0] && setRt(Rid);
+    console.log(Rid);
+    setRt(Rid);
     if (!id[0]) {
       pincode && setFilter(["abs"]);
     }
@@ -96,26 +98,28 @@ function Filter({
             </select>
           </div>
         </div>
-        <div className="clear-filter">
-          <div
-            className="clear-max"
-            onClick={() => {
-              Max(["!=", null]);
-              setMax("");
-              Type([]);
-              setType("");
-              setRt([]);
-              setRating("");
-              Sort([]);
-              setSorting("");
-              setQry([]);
-              setPincode("");
-              setFilter([]);
-            }}
-          >
-            clear-all-filters
+        {
+          <div className="clear-filter">
+            <div
+              className="clear-max"
+              onClick={() => {
+                Max(["!=", null]);
+                setMax("");
+                Type([]);
+                setType("");
+                setRt([]);
+                setRating("");
+                Sort([]);
+                setSorting("");
+                setQry([]);
+                setPincode("");
+                setFilter([]);
+              }}
+            >
+              clear-all-filters
+            </div>
           </div>
-        </div>
+        }
         <button onClick={submitHandling}>ok</button>
       </div>
     </section>

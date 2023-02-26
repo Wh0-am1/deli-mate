@@ -5,12 +5,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import Booking from "../components/Booking/Booking";
 import Review from "../components/Review/Review";
 import SelfReview from "../components/SelfReview/SelfReview";
+import { useAuth } from "../contexts/AuthContext";
 import { getDataId } from "../dataManagement";
 import { db } from "../firebase-config";
 
 let height;
 
 function Order() {
+  const { currentUser } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const [reviews, setReviews] = useState([]);
@@ -100,9 +102,11 @@ function Order() {
           );
         })}
       </div>
-      <div className="reviewing">
-        <SelfReview sid={data.user_Id} />
-      </div>
+      {sid !== currentUser.uid && (
+        <div className="reviewing">
+          <SelfReview sid={data.user_Id} />
+        </div>
+      )}
     </section>
   );
 }

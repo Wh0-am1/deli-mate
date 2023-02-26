@@ -1,15 +1,21 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "./home.css";
 import { ToastContainer, toast } from "react-toastify";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Home({ log, setLogged }) {
+  const { currentUser } = useAuth();
+
   useEffect(() => {
     log && toast.error("Logged Out");
-    console.log(log);
 
-    return setLogged(false);
+    return () => setLogged(false);
   }, []);
+
+  if (currentUser?.emailVerified) {
+    return <Navigate to={"/Home"} />;
+  }
   return (
     <section className="start">
       <ToastContainer theme="colored" autoClose="3000" position="bottom-left" />

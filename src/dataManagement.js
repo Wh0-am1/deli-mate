@@ -5,7 +5,6 @@ import {
   doc,
   getDoc,
   getDocs,
-  onSnapshot,
   query,
   serverTimestamp,
   setDoc,
@@ -27,7 +26,6 @@ export function dataEntryId(data, cln, id) {
   });
 }
 export async function updateData(cln, id, data) {
-  console.log("updating data");
   return await updateDoc(doc(db, cln, id), {
     ...data,
   });
@@ -53,7 +51,6 @@ export async function getDataId(cln, id) {
   if (docSnap.exists()) {
     return docSnap.data();
   } else {
-    // doc.data() will be undefined in this case
     console.log("no data found");
     return null;
   }
@@ -82,7 +79,9 @@ export function dateTime(date) {
 }
 
 export function removeArrayDup(arr1 = [], arr2 = [], arr3 = []) {
-  console.log(arr1, arr2, arr3);
+  if (arr1[0] === "abs" || arr2[0] === "abs" || arr3[0] === "abs") {
+    return ["abs"];
+  }
 
   if (!arr1[0]) {
     if (arr2[0]) {

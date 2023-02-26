@@ -4,7 +4,8 @@ import "../Login/login.css";
 import "./create.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { auth, db } from "../../firebase-config";
+import { sendEmailVerification } from "firebase/auth";
 
 function Create() {
   const [rBusiness, setCheck] = useState("Normal");
@@ -19,10 +20,11 @@ function Create() {
   const [eyeSize1, setEyeSize1] = useState("show-eye");
   const [eyeSize2, setEyeSize2] = useState("show-eye");
   const [flag, setFlag] = useState(false);
+  const [verify, setVerify] = useState(false);
 
   const navigate = useNavigate();
 
-  const { signup } = useAuth();
+  const { signup, currentUser } = useAuth();
 
   const eyeShow = (e) => {
     if (flag) {
@@ -46,9 +48,13 @@ function Create() {
     };
     try {
       const res = await signup(email, password);
-      await setDoc(doc(db, "users", res.user.uid), {
-        ...data,
-      }).then(() => navigate("/Home"));
+      sendEmailVerification(auth.currentUser).then(() => {
+        // Email verification sent!
+        // ...
+        console.log("sent");
+      });
+      setVerify(currentUser.emailVerified);
+
       if (rBusiness) {
         await setDoc(doc(db, "users", res.user.uid), {
           ...data,
@@ -56,6 +62,10 @@ function Create() {
           pincode,
           licence,
         });
+      } else {
+        await setDoc(doc(db, "users", res.user.uid), {
+          ...data,
+        }).then(() => navigate("/"));
       }
     } catch (error) {
       console.log({ error });
@@ -64,6 +74,7 @@ function Create() {
   let resize = "null";
 
   rBusiness === "pending" ? (resize = "resize") : (resize = "null");
+  verify && console.log(verify);
 
   return (
     <section className="login create">

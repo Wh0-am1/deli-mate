@@ -3,9 +3,18 @@ import React, { useEffect, useState } from "react";
 import Request from "../components/Request/Request";
 import "../components/Request/Request.css";
 import { db } from "../firebase-config";
+import { toast, ToastContainer } from "react-toastify";
+import ReactLoading from "react-loading";
+
 function RList() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
+  const [found, setFound] = useState(false);
+
+  function update() {
+    toast.success("submit successfully");
+  }
+
   useEffect(() => {
     setLoad(true);
     const q = query(
@@ -19,6 +28,8 @@ function RList() {
         List.push({ id: doc.id, ...doc.data() });
         setLoad(false);
       });
+      !List[0] && setLoad(false);
+      !List[0] && setFound(true);
       setData(List);
     });
 
@@ -27,13 +38,25 @@ function RList() {
   return (
     <section className="RList">
       <div className="container">
-        {load && (
+        <ToastContainer theme="colored" autoClose="3000" position="top-right" />
+        {found && (
           <div className="load">
             <h1>No Data Found</h1>
           </div>
         )}
+        {load && (
+          <div className="react-load">
+            <ReactLoading
+              type={"spinningBubbles"}
+              color={"rgb(63 55 55)"}
+              height={"30%"}
+              width={"30%"}
+            />
+          </div>
+        )}
         {data.map((elt) => (
           <Request
+            ud={update}
             lid={elt.licence}
             ph={elt.phone}
             ads={elt.address}

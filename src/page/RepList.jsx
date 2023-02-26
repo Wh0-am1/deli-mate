@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import Report from "../components/Report/Report";
 import "../components/Report/Report.css";
 import { db } from "../firebase-config";
+import ReactLoading from "react-loading";
 
 function RepList() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
+  const [found, setFound] = useState(false);
 
   useEffect(() => {
     setLoad(true);
@@ -25,6 +27,8 @@ function RepList() {
           });
           setLoad(false);
         });
+        !List[0] && setLoad(false);
+        !List[0] && setFound(true);
         setData(List);
       },
       (error) => {
@@ -36,9 +40,19 @@ function RepList() {
   }, []);
   return (
     <section className="RepList">
-      {load && (
+      {found && (
         <div className="load">
           <h1>No Data Found</h1>
+        </div>
+      )}
+      {load && (
+        <div className="react-load">
+          <ReactLoading
+            type={"spinningBubbles"}
+            color={"rgb(63 55 55)"}
+            height={"30%"}
+            width={"30%"}
+          />
         </div>
       )}
       {data.map((elt) => {
