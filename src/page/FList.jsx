@@ -37,12 +37,11 @@ function FList() {
   }, []);
   return (
     <section className="FList">
-      {!data[0] &&
-        load(
-          <div className="load">
-            <h1>No Data Found</h1>
-          </div>
-        )}
+      {!data[0] && !load && (
+        <div className="load">
+          <h1>No Data Found</h1>
+        </div>
+      )}
       {load && (
         <div className="react-load">
           <ReactLoading

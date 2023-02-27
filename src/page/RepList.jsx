@@ -38,7 +38,7 @@ function RepList() {
   }, []);
   return (
     <section className="RepList">
-      {!data[0] && load && (
+      {!data[0] && !load && (
         <div className="load">
           <h1>No Data Found</h1>
         </div>

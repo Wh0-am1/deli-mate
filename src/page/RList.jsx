@@ -37,7 +37,7 @@ function RList() {
     <section className="RList">
       <div className="container">
         <ToastContainer theme="colored" autoClose="3000" position="top-right" />
-        {!data[0] && load && (
+        {!data[0] && !load && (
           <div className="load">
             <h1>No Data Found</h1>
           </div>
