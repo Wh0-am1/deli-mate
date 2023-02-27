@@ -3,10 +3,10 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { deleteData, getDataId, updateData } from "../../dataManagement";
+import { getDataId, updateData } from "../../dataManagement";
 import "./BookedList.css";
 
-function BookedList({ bookId, qty, uid, id }) {
+function BookedList({ bookId, qty, uid, id, price }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [bid, setBid] = useState();
@@ -44,6 +44,10 @@ function BookedList({ bookId, qty, uid, id }) {
           <div className="qty flex">
             <label>Quantity : </label>
             <p>{qty}</p>
+          </div>
+          <div className="qty flex">
+            <label>Price : </label>
+            <p>{price}</p>
           </div>
           <div className="phone flex">
             <label>Phone : </label>

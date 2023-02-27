@@ -4,6 +4,7 @@ import { db } from "../../firebase-config";
 import FoodList from "../FoodList/FoodList";
 import "./Lists.css";
 import ReactLoading from "react-loading";
+import { updateData } from "../../dataManagement";
 
 function Lists({ search, Max, Sort, Type }) {
   const [data, setData] = useState([]);
@@ -15,6 +16,7 @@ function Lists({ search, Max, Sort, Type }) {
     const q = query(
       collection(db, "Foodlistings"),
       search,
+      where("flag", "==", true),
       where("price", ...Max),
       ...Type,
       ...Sort
@@ -24,7 +26,9 @@ function Lists({ search, Max, Sort, Type }) {
       (snapshot) => {
         const List = [];
         snapshot.docs.forEach((doc) => {
-          if (Number(doc.data().qty) !== Number(doc.data().nQty)) {
+          if (Number(doc.data().qty) === Number(doc.data().nQty)) {
+            updateData("Foodlistings", doc.id, { flag: false });
+          } else {
             List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
             setLoad(false);
           }
@@ -62,13 +66,14 @@ function Lists({ search, Max, Sort, Type }) {
           return (
             <FoodList
               uid={elt.uid}
-              price={elt.price}
+              price={elt.nPrice}
               qty={elt.qty}
               type={elt.type}
               key={elt.id}
               id={elt.id}
               pic={elt.pic}
               eFlag={elt.eFlag}
+              nQty={elt.nQty}
             />
           );
         })}

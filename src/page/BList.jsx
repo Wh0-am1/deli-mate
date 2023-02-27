@@ -9,8 +9,10 @@ import ReactLoading from "react-loading";
 
 function BList() {
   const [order, setOrder] = useState([]);
+  const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
-  const [found, setFound] = useState(false);
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     const q = query(collection(db, "orders"), where("status", "==", "booked"));
     const unsubscribe = onSnapshot(
@@ -23,7 +25,6 @@ function BList() {
           setLoad(false);
         });
         !List[0] && setLoad(false);
-        !List[0] && setFound(true);
       },
       (error) => {
         console.log(error);
@@ -32,9 +33,27 @@ function BList() {
 
     return unsubscribe;
   }, []);
+  useEffect(() => {
+    let List = [];
+    if (search) {
+      List = order.filter((e) => e.name.search(search) === 0);
+      setData(List);
+    } else {
+      setData(order);
+    }
+  }, [search, order]);
   return (
     <section className="b-list">
-      {found && (
+      <div className="search">
+        <input
+          type="text"
+          placeholder="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <i className="icon fa-sharp fa-solid fa-magnifying-glass" />
+      </div>
+      {!data[0] && !load && (
         <div className="load">
           <h1>No Data Found</h1>
         </div>
@@ -49,13 +68,14 @@ function BList() {
           />
         </div>
       )}
-      {order.map((elt) => (
+      {data.map((elt) => (
         <BookedList
           bookId={elt.bookId}
           qty={elt.qty}
           uid={elt.user_Id}
           id={elt.id}
           key={elt.id}
+          price={elt.price}
         />
       ))}
     </section>

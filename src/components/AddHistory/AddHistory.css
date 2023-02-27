@@ -22,3 +22,18 @@
   font-size: 1.3rem;
   font-family: "Prompt", sans-serif;
 }
+.addHistory .btn-flag {
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0 5px black;
+  font-size: 1.3rem;
+  transition: all 0.3s;
+}
+.addHistory .btn-flag:hover {
+  opacity: 0.8;
+}
+.addHistory .btn-flag:active {
+  scale: 0.8;
+}

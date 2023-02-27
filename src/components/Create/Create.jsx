@@ -48,25 +48,21 @@ function Create() {
     };
     try {
       const res = await signup(email, password);
-      sendEmailVerification(auth.currentUser).then(() => {
-        // Email verification sent!
-        // ...
-        console.log("sent");
+      sendEmailVerification(auth.currentUser).then(async () => {
+        if (rBusiness) {
+          await setDoc(doc(db, "users", res.user.uid), {
+            ...data,
+            address,
+            pincode,
+            licence,
+          }).then(() => navigate("/"));
+        } else {
+          await setDoc(doc(db, "users", res.user.uid), {
+            ...data,
+          }).then(() => navigate("/"));
+        }
       });
       setVerify(currentUser.emailVerified);
-
-      if (rBusiness) {
-        await setDoc(doc(db, "users", res.user.uid), {
-          ...data,
-          address,
-          pincode,
-          licence,
-        });
-      } else {
-        await setDoc(doc(db, "users", res.user.uid), {
-          ...data,
-        }).then(() => navigate("/"));
-      }
     } catch (error) {
       console.log({ error });
     }

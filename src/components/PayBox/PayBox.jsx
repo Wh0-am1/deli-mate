@@ -2,7 +2,8 @@ import { serverTimestamp } from "firebase/firestore";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { dataEntry, updateData } from "../../dataManagement";
+import { useAuth } from "../../contexts/AuthContext";
+import { dataEntry, getDataId, updateData } from "../../dataManagement";
 import "./PayBox.css";
 
 function PayBox({ box, setBox, qty, sid, uid, type, price, nQty, id }) {
@@ -11,19 +12,30 @@ function PayBox({ box, setBox, qty, sid, uid, type, price, nQty, id }) {
   const [display, setDisplay] = useState("display");
   const [width2, setWidth2] = useState("width-0");
   const [bookId, setBookId] = useState("");
+  const [name, setName] = useState("");
+
+  const { currentUser } = useAuth();
 
   const setOrder = () => {
     updateData("Foodlistings", id, { nQty: Number(nQty) + Number(qty) });
     dataEntry(
-      { qty, bookId, sid, type, price, status: "booked" },
+      { qty, bookId, sid, type, price, status: "booked", name },
       "orders",
       uid
     );
   };
+
   useEffect(() => {
     setScale("");
     const d = new Date();
     setBookId(d.getMilliseconds() * 197436);
+
+    async function getName() {
+      const dt = await getDataId("users", currentUser.uid);
+      dt && setName(dt.name);
+    }
+
+    getName();
   }, []);
   return (
     <section className={`payBox`}>

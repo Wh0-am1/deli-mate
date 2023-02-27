@@ -17,12 +17,7 @@ export function dataEntry(data, cln, uid) {
   return addDoc(collection(db, cln), {
     user_Id: uid,
     ...data,
-    time: Date(serverTimestamp()).toString(),
-  });
-}
-export function dataEntryId(data, cln, id) {
-  setDoc(doc(db, cln, id), {
-    ...data,
+    time: serverTimestamp(),
   });
 }
 export async function updateData(cln, id, data) {
@@ -36,6 +31,7 @@ export async function getData(cln) {
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     List.push({ ...doc.data(), id: doc.id });
+    console.log("from");
   });
   return List;
 }
@@ -70,9 +66,10 @@ export async function dataWhere(cln, condition) {
 }
 
 export function dateTime(date) {
-  let time = Number(date.slice(16, 18));
+  const time = Number(date.slice(16, 18));
+
   if (time < 12) {
-    return date.slice(0, 15) + time + date.slice(19, 21) + " am";
+    return date.slice(0, 15) + "  " + time + date.slice(18, 21) + " am";
   } else {
     return date.slice(0, 15) + "  " + (time - 12) + date.slice(18, 21) + " pm";
   }

@@ -1,16 +1,40 @@
 import React, { useEffect, useState } from "react";
 import "./FoodList.css";
 import { useNavigate } from "react-router-dom";
-import { getDataId } from "../../dataManagement";
+import { getDataId, updateData } from "../../dataManagement";
 import { useAuth } from "../../contexts/AuthContext";
 
-function FoodList({ uid, price, qty, type, id, eFlag }) {
+function FoodList({ uid, price, qty, type, id, eFlag, nQty }) {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [img, setImg] = useState("");
   const [rate, setRate] = useState("");
 
+  const [ePrice, setEprice] = useState("");
+  const [eQty, setEqty] = useState("");
+  const [eType, setEtype] = useState("");
+
   const { currentUser } = useAuth();
+
+  function editOnce() {
+    const List = [];
+    ePrice && List.push({ price: ePrice });
+    eQty && List.push({ qty: eQty });
+    eType && List.push({ type: eType });
+
+    if (List[0]) {
+      let t = { eFlag: false };
+      List.map((e) => {
+        t = { ...t, ...e };
+      });
+      console.log(id);
+      updateData("Foodlistings", id, t);
+      setEprice("");
+      setEqty("");
+      setEtype("");
+      setWidth("width-once-0");
+    }
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,22 +74,38 @@ function FoodList({ uid, price, qty, type, id, eFlag }) {
           <div className="once-container">
             <div>
               <label>Price : </label>
-              <input type="number" />
+              <input
+                type="number"
+                value={ePrice}
+                onChange={(e) => setEprice(e.target.value)}
+              />
             </div>
             <div>
               <label>Quantitiy : </label>
-              <input type="number" />
+              <input
+                type="number"
+                value={eQty}
+                onChange={(e) => setEqty(e.target.value)}
+              />
             </div>
             <div>
               <label>Type : </label>
-              <select>
+              <select value={eType} onChange={(e) => setEtype(e.target.value)}>
                 <option value="">select</option>
                 <option value="veg">veg</option>
                 <option value="non-veg">non-veg</option>
               </select>
             </div>
             <div>
-              <button>Update</button>
+              <button
+                onClick={() => {
+                  if (ePrice || eQty || eType) {
+                    editOnce();
+                  }
+                }}
+              >
+                Update
+              </button>
             </div>
           </div>
         </div>
@@ -81,7 +121,7 @@ function FoodList({ uid, price, qty, type, id, eFlag }) {
           <h1>{name}</h1>
           <div className="details">
             <h1>Price : {`${price}/-`}</h1>
-            <p className="qty">quantity : {`${qty}`}</p>
+            <p className="qty">quantity : {`${Number(qty) - Number(nQty)}`}</p>
             <p> Type : {`${type}`}</p>
             <p id="rating">rating : {Number(rate).toFixed(2)}</p>
           </div>

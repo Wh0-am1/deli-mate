@@ -53,4 +53,10 @@
   .business .navbar ul {
     gap: 1.5rem;
   }
+  .business .navbar h1 {
+    font-size: 2rem;
+  }
+  .business .navbar ul li {
+    font-size: 1.2rem;
+  }
 }

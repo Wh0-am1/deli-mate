@@ -1,3 +1,12 @@
+.b-list .search {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+}
+.b-list .search i:active {
+  scale: 0.8;
+}
 .booked-list .container {
   width: 80%;
   margin: auto;
@@ -72,11 +81,19 @@
   margin: auto;
   justify-content: center;
   align-items: center;
+  position: relative;
+  padding-top: 5rem;
 }
 .b-list .react-load {
   position: absolute;
   width: 50%;
   height: 50%;
   right: 7%;
-  top: 40%;
+  top: 50%;
+}
+@media (max-width: 550px) {
+  .b-list .search {
+    width: 100%;
+    left: -1rem;
+  }
 }

@@ -1,16 +1,18 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { dateTime } from "../../dataManagement";
+import { toast, ToastContainer } from "react-toastify";
+import { dateTime, updateData } from "../../dataManagement";
 import "./AddHistory.css";
 
-function AddHistory({ time, qty, price, type }) {
+function AddHistory({ time, qty, price, type, id, flag }) {
   const [date, setDate] = useState("");
   useEffect(() => {
-    setDate(dateTime(time));
+    setDate(dateTime(Date(date).toString()));
   }, []);
   return (
     <section className="addHistory">
+      <ToastContainer theme="colored" autoClose="3000" position="top-right" />
       <div className="container">
         <div className="flex time">
           <label>Time : </label>
@@ -28,10 +30,17 @@ function AddHistory({ time, qty, price, type }) {
           <label>Type : </label>
           <p>{type}</p>
         </div>
-        {/* <div className="flex after">
-          <label> After Qunatity : </label>
-          <p>web 23/34/1002 10:43 pm</p>
-        </div> */}
+        {flag && (
+          <button
+            className="btn-flag"
+            onClick={() => {
+              updateData("Foodlistings", id, { flag: false });
+              toast.success("List Stopped");
+            }}
+          >
+            Stop
+          </button>
+        )}
       </div>
     </section>
   );

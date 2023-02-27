@@ -1,7 +1,7 @@
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { dataEntry, dataEntryId } from "../../dataManagement";
+import { dataEntry } from "../../dataManagement";
 import { db } from "../../firebase-config";
 import PayBox from "../PayBox/PayBox";
 import "./Booking.css";
@@ -166,8 +166,8 @@ function Booking({
               </div>
             </div>
             <div className="price">
-              <p>{`${price}/-`}</p>
-              <p className="strike">{`${nPrice}/-`}</p>
+              <p>{`${nPrice}/-`}</p>
+              <p className="strike">{`${price}/-`}</p>
             </div>
             <p>10:00 to 10:30</p>
             <div className="map">

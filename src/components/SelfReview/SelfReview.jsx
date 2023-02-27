@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { dataEntry, dataEntryId, updateData } from "../../dataManagement";
+import { dataEntry, updateData } from "../../dataManagement";
 import { db } from "../../firebase-config";
 import "./SelfReview.css";
 function SelfReview({ sid }) {

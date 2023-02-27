@@ -18,13 +18,13 @@ function Report({ sid, uid, time, msg, id, res }) {
     setWarn("");
     updateData("report", id, {
       warn: warn,
-      warnTime: Date(serverTimestamp()).toString(),
+      warnTime: serverTimestamp(),
       flag: false,
       wFlag: true,
     });
   }
   useEffect(() => {
-    setDate(dateTime(time));
+    setDate(dateTime(Date(date).toString()));
     const getUname = async () => {
       const dt = await getDataId("users", uid);
       setUname(dt?.name);
@@ -104,7 +104,7 @@ function Report({ sid, uid, time, msg, id, res }) {
               onClick={() => {
                 Update();
                 updateData("report", id, {
-                  cancelTime: Date(serverTimestamp()).toString(),
+                  cancelTime: serverTimestamp(),
                   flag: false,
                 });
               }}
@@ -113,7 +113,7 @@ function Report({ sid, uid, time, msg, id, res }) {
               className="fa-solid fa-xmark"
               onClick={() => {
                 updateData("report", id, {
-                  cancelTime: Date(serverTimestamp()).toString(),
+                  cancelTime: serverTimestamp(),
                   flag: false,
                 });
               }}

@@ -144,7 +144,11 @@ function Add() {
             </div>
             <div className="type">
               <span>Type : </span>
-              <select onChange={(e) => setType(e.target.value)} value={type}>
+              <select
+                onChange={(e) => setType(e.target.value)}
+                value={type}
+                required
+              >
                 <option value="">--Type--</option>
                 <option value="veg">veg</option>
                 <option value="non-veg">non-veg</option>
