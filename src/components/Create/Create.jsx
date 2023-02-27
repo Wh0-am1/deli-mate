@@ -16,6 +16,7 @@ function Create() {
   const [address, setAddress] = useState("");
   const [licence, setLicence] = useState("");
   const [pincode, setPincode] = useState("");
+  const [message, setMessage] = useState("");
 
   const [eyeSize1, setEyeSize1] = useState("show-eye");
   const [eyeSize2, setEyeSize2] = useState("show-eye");
@@ -40,6 +41,15 @@ function Create() {
 
   const btnHandle = async (e) => {
     e.preventDefault();
+
+    if (phone.length < 10) {
+      setMessage("Incorrect Phone Number");
+      return;
+    } else if ((pincode && pincode.length < 6) || pincode.length > 6) {
+      setMessage("Incorrect Pincode");
+      return;
+    }
+
     const data = {
       rBusiness,
       name,
@@ -64,7 +74,13 @@ function Create() {
       });
       setVerify(currentUser.emailVerified);
     } catch (error) {
-      console.log({ error });
+      if (error.message.search("email-already-in-use") > 0) {
+        setMessage("email-already-in-use");
+      } else if (error.message.search("weak-password") > 0) {
+        setMessage("atleast 6 character password");
+      } else {
+        setMessage("something wrong");
+      }
     }
   };
   let resize = "null";
@@ -80,6 +96,7 @@ function Create() {
       </div>
       <div className="login-box create-box">
         <span className="heading">Create Account</span>
+        {message && <p className="err">{message}</p>}
         <form onSubmit={btnHandle} className="form">
           {/* Username or Provider Name */}
           <input
