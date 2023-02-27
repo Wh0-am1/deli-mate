@@ -78,8 +78,6 @@ function Create() {
         setMessage("email-already-in-use");
       } else if (error.message.search("weak-password") > 0) {
         setMessage("atleast 6 character password");
-      } else {
-        setMessage("something wrong");
       }
     }
   };
