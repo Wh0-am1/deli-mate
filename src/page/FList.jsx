@@ -8,7 +8,6 @@ import ReactLoading from "react-loading";
 function FList() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
-  const [found, setFound] = useState(false);
 
   useEffect(() => {
     setLoad(true);
@@ -27,7 +26,6 @@ function FList() {
           setLoad(false);
         });
         !List[0] && setLoad(false);
-        !List[0] && setFound(true);
         setData(List);
       },
       (error) => {
@@ -39,11 +37,12 @@ function FList() {
   }, []);
   return (
     <section className="FList">
-      {found && (
-        <div className="load">
-          <h1>No Data Found</h1>
-        </div>
-      )}
+      {!data[0] &&
+        load(
+          <div className="load">
+            <h1>No Data Found</h1>
+          </div>
+        )}
       {load && (
         <div className="react-load">
           <ReactLoading

@@ -8,7 +8,6 @@ import ReactLoading from "react-loading";
 function RepList() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
-  const [found, setFound] = useState(false);
 
   useEffect(() => {
     setLoad(true);
@@ -28,7 +27,6 @@ function RepList() {
           setLoad(false);
         });
         !List[0] && setLoad(false);
-        !List[0] && setFound(true);
         setData(List);
       },
       (error) => {
@@ -40,7 +38,7 @@ function RepList() {
   }, []);
   return (
     <section className="RepList">
-      {found && (
+      {!data[0] && load && (
         <div className="load">
           <h1>No Data Found</h1>
         </div>

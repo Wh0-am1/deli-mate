@@ -9,7 +9,6 @@ import ReactLoading from "react-loading";
 function RList() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
-  const [found, setFound] = useState(false);
 
   function update() {
     toast.success("submit successfully");
@@ -29,7 +28,6 @@ function RList() {
         setLoad(false);
       });
       !List[0] && setLoad(false);
-      !List[0] && setFound(true);
       setData(List);
     });
 
@@ -39,7 +37,7 @@ function RList() {
     <section className="RList">
       <div className="container">
         <ToastContainer theme="colored" autoClose="3000" position="top-right" />
-        {found && (
+        {!data[0] && load && (
           <div className="load">
             <h1>No Data Found</h1>
           </div>
