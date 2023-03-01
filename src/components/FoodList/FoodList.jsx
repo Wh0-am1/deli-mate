@@ -110,7 +110,7 @@ function FoodList({ uid, price, qty, type, id, eFlag, nQty }) {
           </div>
         </div>
         <div className="img-bs">
-          <img src={img ? img : "./img/default_profile.png"} alt="img" />
+          <img src={img ? img : "/img/default_profile.png"} alt="img" />
         </div>
         <div
           className="description"

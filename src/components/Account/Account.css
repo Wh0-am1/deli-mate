@@ -67,6 +67,8 @@
 }
 .profile-name {
   text-transform: uppercase;
+  font-size: 1.6rem;
+  max-width: 500px;
 }
 .account .card {
   display: flex;
@@ -82,6 +84,8 @@
   padding-top: 4rem;
   position: relative;
   z-index: 1;
+  max-width: 500px;
+  overflow-wrap: break-word;
 }
 .account p {
   font-family: "Josefin Sans", sans-serif;

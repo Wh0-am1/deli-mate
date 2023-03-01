@@ -1,4 +1,4 @@
-import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { dataEntry } from "../../dataManagement";
@@ -158,8 +158,7 @@ function Booking({
           </div>
           <div className="book-details">
             <div className="head-rate">
-              <h1>{name}</h1>
-              <i className="line"></i>
+              <h1 className="name">{name}</h1>
               <div className="rating">
                 <h1>{rate}</h1>
                 <i className="fa-sharp fa-solid fa-star"></i>

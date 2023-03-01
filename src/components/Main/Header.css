@@ -93,3 +93,14 @@
     width: 70%;
   }
 }
+@media (max-width: 450px) {
+  .header ul li {
+    margin-left: 1rem;
+    padding: 0;
+    background: none;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    padding-right: 5px;
+    border-radius: 5px;
+  }
+}

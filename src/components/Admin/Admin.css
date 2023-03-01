@@ -52,3 +52,17 @@
     gap: 1.5rem;
   }
 }
+@media (max-width: 600px) {
+  .Admin .navbar {
+    flex-direction: column;
+  }
+  .Admin .navbar ul {
+    gap: 1rem;
+  }
+  .Admin .navbar h1 {
+    font-size: 2rem;
+  }
+  .Admin .navbar ul li {
+    font-size: 1.2rem;
+  }
+}

@@ -7,8 +7,9 @@
   font-weight: 500;
 }
 .Booking {
-  height: 700px;
+  min-height: 700px;
   background-color: rgb(100, 140, 127);
+  padding-top: 2rem;
 }
 .Booking .food-type {
   font-size: 1.5rem;
@@ -31,6 +32,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  overflow-wrap: break-word;
 }
 .Booking .outline {
   display: flex;
@@ -73,17 +75,18 @@
 }
 .Booking .head-rate {
   display: flex;
-  flex-direction: row;
   gap: 1rem;
+  max-width: 600px;
 }
 .Booking .head-rate h1 {
   text-transform: uppercase;
+  max-width: 500px;
 }
-i.line {
-  background-color: black;
-  width: 2px;
-  height: 2rem;
+.Booking .head-rate h1.name {
+  border-right: 2px solid black;
+  padding-right: 1rem;
 }
+
 .Booking .total-qty h1 {
   color: rgb(255, 255, 255);
   animation: infinite scale 0.9s alternate;
