@@ -76,6 +76,7 @@ export function dateTime(date) {
 }
 
 export function removeArrayDup(arr1 = [], arr2 = [], arr3 = []) {
+  console.log({ arr1, arr2, arr3 });
   if (arr1[0] === "abs" || arr2[0] === "abs" || arr3[0] === "abs") {
     return ["abs"];
   }
@@ -96,6 +97,10 @@ export function removeArrayDup(arr1 = [], arr2 = [], arr3 = []) {
     arr1 = arr1.filter((x) => arr2.indexOf(x) !== -1);
   } else if (arr3[0]) {
     arr1 = arr1.filter((x) => arr3.indexOf(x) !== -1);
+  }
+
+  if (!arr1[0]) {
+    arr1 = ["noData"];
   }
 
   return arr1;

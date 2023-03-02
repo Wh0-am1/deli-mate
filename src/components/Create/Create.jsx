@@ -63,7 +63,7 @@ function Create() {
       setBflag(true);
       const res = await signup(email, password);
       sendEmailVerification(auth.currentUser).then(async () => {
-        if (rBusiness) {
+        if (rBusiness === "pending") {
           await setDoc(doc(db, "users", res.user.uid), {
             ...data,
             address,

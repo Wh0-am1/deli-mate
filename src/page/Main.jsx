@@ -31,8 +31,10 @@ function Main({ log, setLogged }) {
     return setLogged(false);
   }, []);
   useEffect(() => {
-    const List = removeArrayDup(search, filter, rate);
-    List[0] && setQry(where("user_Id", "in", List));
+    if (search[0] || filter[0] || rate[0]) {
+      const List = removeArrayDup(search, filter, rate);
+      List[0] && setQry(where("user_Id", "in", List));
+    }
   }, [search, filter, rate]);
 
   const widthHandling = () => {

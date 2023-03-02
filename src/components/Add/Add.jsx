@@ -142,7 +142,7 @@ function Add() {
               <input
                 type="number"
                 required
-                onChange={(e) => setNprice(e.target.value)}
+                onChange={(e) => setNprice(Number(e.target.value))}
                 value={nPrice}
               />
             </div>

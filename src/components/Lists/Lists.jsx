@@ -9,7 +9,6 @@ import { updateData } from "../../dataManagement";
 function Lists({ search, Max, Sort, Type }) {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
-  const [found, setFound] = useState(false);
 
   useEffect(() => {
     setLoad(true);
@@ -17,7 +16,7 @@ function Lists({ search, Max, Sort, Type }) {
       collection(db, "Foodlistings"),
       search,
       where("flag", "==", true),
-      where("price", ...Max),
+      where("nPrice", ...Max),
       ...Type,
       ...Sort
     );
@@ -30,12 +29,12 @@ function Lists({ search, Max, Sort, Type }) {
             updateData("Foodlistings", doc.id, { flag: false });
           } else {
             List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
+            console.log(List);
             setLoad(false);
           }
         });
         setData(List);
         !List[0] && setLoad(false);
-        !List[0] && setFound(true);
       },
       (error) => {
         console.log(error);
@@ -47,7 +46,7 @@ function Lists({ search, Max, Sort, Type }) {
   return (
     <section className="main-body">
       <div className="contain-body">
-        {found && (
+        {!data[0] && !load && (
           <div className="load">
             <h1>No Data Found</h1>
           </div>

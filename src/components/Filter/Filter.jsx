@@ -12,12 +12,7 @@ function Filter({
   Max,
   Type,
   Sort,
-  st,
-  mx,
-  tp,
-  ft,
   setQry,
-  rt,
   setRt,
 }) {
   const [pincode, setPincode] = useState("");
@@ -34,15 +29,20 @@ function Filter({
     let rList = [];
     if (rating[0]) {
       rList = await dataWhere("users", [where("rate", ">=", Number(rating))]);
+      if (!rList[0]) {
+        rList = [{ id: "noData" }];
+      }
     }
     const Rid = rList.map((value) => {
       return value.id;
     });
+
+    console.log(Rid);
+
     id[0] && setFilter(id);
     max && Max(["<=", Number(max)]);
     type && Type([where("type", "==", type)]);
-    sorting && Sort([orderBy("price", sorting)]);
-    console.log(Rid);
+    sorting && Sort([orderBy("nPrice", sorting)]);
     setRt(Rid);
     if (!id[0]) {
       pincode && setFilter(["abs"]);
