@@ -8,6 +8,7 @@
 }
 .login-box {
   display: flex;
+  position: relative;
   flex-direction: column;
   background-color: rgb(181, 195, 188);
   border-radius: 20px;
@@ -136,6 +137,19 @@ form {
   background-color: rgb(174, 223, 185);
   border: 1px solid rgb(154, 219, 153);
   color: rgb(18, 99, 31);
+}
+.login-box .loading-login {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.458);
+  border-radius: 15px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes move {

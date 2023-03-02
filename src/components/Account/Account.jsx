@@ -13,6 +13,7 @@ import { storage } from "../../firebase-config";
 import EditAccount from "../EditAccount/EditAccount";
 import OrderHistory from "../OrderHistory/OrderHistory";
 import "./Account.css";
+import ReactLoading from "react-loading";
 
 let flag = true;
 function Account({ setLogged }) {
@@ -28,6 +29,7 @@ function Account({ setLogged }) {
   const [history, setHistory] = useState([]);
   const [edit, setEdit] = useState("scale");
   const [update, setUpdate] = useState([]);
+  const [load, setLoad] = useState(true);
 
   useEffect(() => {
     update[0] &&
@@ -174,24 +176,29 @@ function Account({ setLogged }) {
                 />
                 <i
                   className="fa-solid fa-pen-to-square"
-                  onClick={() => setEdit("null")}
+                  onClick={() => {
+                    setEdit("null");
+                    setMove("order-width-move");
+                  }}
                 />
               </div>
               <h1 className="profile-name">{data.name}</h1>
-              <p>
-                <label>Phone :</label> {data.phone}
-              </p>
-              <p>
-                <label>Email :</label> {currentUser.email}
-              </p>
-              <p>
-                <label>Account :</label>{" "}
-                {role === "pending" ? "Business" : role}
-              </p>
-              <p className="status">
-                <label>Status :</label>{" "}
-                {role === "pending" ? "Pending...." : "Verified"}
-              </p>
+              <div className="account-data">
+                <p>
+                  <label>Phone :</label> {data.phone}
+                </p>
+                <p>
+                  <label>Email :</label> {currentUser.email}
+                </p>
+                <p>
+                  <label>Account :</label>{" "}
+                  {role === "pending" ? "Business" : role}
+                </p>
+                <p className="status">
+                  <label>Status :</label>{" "}
+                  {role === "pending" ? "Pending...." : "Verified"}
+                </p>
+              </div>
               <p className="logout">
                 <label onClick={handleLogout}>
                   Logout <i className="fa-solid fa-right-from-bracket"></i>
@@ -208,7 +215,19 @@ function Account({ setLogged }) {
               </label>
             </div>
             <div className={`order-details ${move}`}>
-              {!history[0] && <h1 className="noData">No Data Found</h1>}
+              {load && !history[0] && (
+                <div className="loading-login">
+                  <ReactLoading
+                    type={"spin"}
+                    color={"black"}
+                    height={"20%"}
+                    width={"20%"}
+                  />
+                </div>
+              )}
+              {!history[0] && !load && (
+                <h1 className="noData">No Data Found</h1>
+              )}
               {history.map((elt) => (
                 <OrderHistory
                   sid={elt.user_Id}

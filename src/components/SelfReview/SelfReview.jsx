@@ -29,8 +29,9 @@ function SelfReview({ sid }) {
   }, []);
 
   function reviewHandling() {
-    if (rate === "" || msg === "") console.log("nothing");
-    else {
+    if (rate === "" || msg === "") {
+      return;
+    } else {
       const newNumRatings = Number(nRate) + 1;
       const oldRatingTotal = Number(rt) * Number(nRate);
       const newAvgRating = (oldRatingTotal + rate) / newNumRatings;

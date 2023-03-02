@@ -72,7 +72,7 @@ function PayBox({ box, setBox, qty, sid, uid, type, price, nQty, id }) {
           </div>
           <img src="/img/pay.gif" alt="" />
           <div className="btn-qout">
-            <h1>pay the 30% </h1>
+            <h1>{`pay : ${Math.trunc((price * qty * 30) / 100)}/-  `}</h1>
             <button
               onClick={() => {
                 setWidth("width-100");

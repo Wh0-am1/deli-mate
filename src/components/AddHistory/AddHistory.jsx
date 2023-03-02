@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { dateTime, updateData } from "../../dataManagement";
 import "./AddHistory.css";
 
-function AddHistory({ time, qty, price, type, id, flag }) {
+function AddHistory({ time, qty, price, type, id, flag, nQty }) {
   const [date, setDate] = useState("");
   useEffect(() => {
     setDate(dateTime(Date(date).toString()));
@@ -30,6 +30,12 @@ function AddHistory({ time, qty, price, type, id, flag }) {
           <label>Type : </label>
           <p>{type}</p>
         </div>
+        {nQty && (
+          <div className="flex type">
+            <label>Selled : </label>
+            <p>{nQty}</p>
+          </div>
+        )}
         {flag && (
           <button
             className="btn-flag"

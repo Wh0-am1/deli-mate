@@ -9,6 +9,12 @@
   height: 80%;
   transition: all 0.3s;
 }
+.account .account-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 .account {
   min-height: 100vh;
@@ -103,7 +109,16 @@
   overflow-x: hidden;
   transition: width 0.6s;
   border-radius: 15px;
+  position: relative;
 }
+.account .order-details .loading-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
 .account .width {
   width: 300px;
   margin-left: 10px;

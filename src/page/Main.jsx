@@ -33,7 +33,6 @@ function Main({ log, setLogged }) {
   useEffect(() => {
     const List = removeArrayDup(search, filter, rate);
     List[0] && setQry(where("user_Id", "in", List));
-    console.log({ search, filter, rate });
   }, [search, filter, rate]);
 
   const widthHandling = () => {

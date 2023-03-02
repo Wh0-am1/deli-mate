@@ -160,7 +160,7 @@ function Booking({
             <div className="head-rate">
               <h1 className="name">{name}</h1>
               <div className="rating">
-                <h1>{rate}</h1>
+                <h1>{Number(rate)}</h1>
                 <i className="fa-sharp fa-solid fa-star"></i>
               </div>
             </div>

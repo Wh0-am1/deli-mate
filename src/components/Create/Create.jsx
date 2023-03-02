@@ -5,6 +5,7 @@ import "./create.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
+import ReactLoading from "react-loading";
 import { sendEmailVerification } from "firebase/auth";
 
 function Create() {
@@ -22,6 +23,7 @@ function Create() {
   const [eyeSize2, setEyeSize2] = useState("show-eye");
   const [flag, setFlag] = useState(false);
   const [verify, setVerify] = useState(false);
+  const [bFlag, setBflag] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,6 +43,7 @@ function Create() {
 
   const btnHandle = async (e) => {
     e.preventDefault();
+    setMessage("");
 
     if (phone.length < 10) {
       setMessage("Incorrect Phone Number");
@@ -57,6 +60,7 @@ function Create() {
       phone,
     };
     try {
+      setBflag(true);
       const res = await signup(email, password);
       sendEmailVerification(auth.currentUser).then(async () => {
         if (rBusiness) {
@@ -74,6 +78,7 @@ function Create() {
       });
       setVerify(currentUser.emailVerified);
     } catch (error) {
+      setBflag(false);
       if (error.message.search("email-already-in-use") > 0) {
         setMessage("email-already-in-use");
       } else if (error.message.search("weak-password") > 0) {
@@ -93,6 +98,16 @@ function Create() {
         <h1>LET'S START SAVING FOOD.</h1>
       </div>
       <div className="login-box create-box">
+        {bFlag && (
+          <div className="loading-login">
+            <ReactLoading
+              type={"spin"}
+              color={"black"}
+              height={"20%"}
+              width={"20%"}
+            />
+          </div>
+        )}
         <span className="heading">Create Account</span>
         {message && <p className="err">{message}</p>}
         <form onSubmit={btnHandle} className="form">
@@ -214,7 +229,7 @@ function Create() {
               />
             )}
           </div>
-          <button>Create</button>
+          <button>Create </button>
           <div className="login-other create-other">
             <span>
               <Link to={"/login"}>

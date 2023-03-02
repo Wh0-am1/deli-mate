@@ -20,6 +20,10 @@ function Add() {
 
   const submitHandling = async (e) => {
     e.preventDefault();
+    if (Number(price) <= 0 || Number(qty) <= 0 || Number(nPrice) <= 0) {
+      toast.error("Negetive Not Allowed");
+      return;
+    }
     const data = { price, qty, nPrice, type, flag: true, nQty: 0, eFlag: true };
     try {
       dataEntry(data, "Foodlistings", currentUser.uid);

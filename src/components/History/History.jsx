@@ -33,6 +33,7 @@ function History() {
           setHistory(List);
           setLoad(false);
         });
+        !List[0] && setLoad(false);
       },
       (error) => {
         console.log(error);
@@ -43,7 +44,7 @@ function History() {
   }, []);
   return (
     <section className="history">
-      {!history[0] && !load && (
+      {!load && !history[0] && (
         <div className="load">
           <h1>No Data Found</h1>
         </div>
@@ -68,6 +69,7 @@ function History() {
             key={elt.id}
             id={elt.id}
             flag={elt.flag}
+            nQty={elt.nQty}
           />
         ))}
       </div>

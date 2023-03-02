@@ -34,7 +34,7 @@ function OrderHistory({ sid, date, price, qty, type, bId, status }) {
           <label>Quantitity :</label> {qty}
         </p>
         <p>
-          <label>Price : </label> {`${price}/-`}
+          <label>Price : </label> {`${price * qty}/-`}
         </p>
         <p>
           <label>Status : </label> {status}
