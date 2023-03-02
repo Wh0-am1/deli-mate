@@ -183,6 +183,7 @@
   min-height: 100vh;
   min-width: 100vw;
   z-index: 5;
+  top: 0;
 }
 .bg-height {
   height: 100vh;
