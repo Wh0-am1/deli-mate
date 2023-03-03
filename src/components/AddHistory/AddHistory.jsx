@@ -30,7 +30,7 @@ function AddHistory({ time, qty, price, type, id, flag, nQty }) {
           <label>Type : </label>
           <p>{type}</p>
         </div>
-        {nQty && (
+        {Boolean(nQty) && (
           <div className="flex type">
             <label>Selled : </label>
             <p>{nQty}</p>

@@ -9,7 +9,6 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { dataWhere } from "../../dataManagement";
 import AddHistory from "../AddHistory/AddHistory";
 import "./History.css";
 import ReactLoading from "react-loading";
@@ -22,7 +21,8 @@ function History() {
   useEffect(() => {
     const q = query(
       collection(db, "Foodlistings"),
-      where("user_Id", "==", currentUser.uid)
+      where("user_Id", "==", currentUser.uid),
+      orderBy("time", "desc")
     );
     const unsub = onSnapshot(
       q,
