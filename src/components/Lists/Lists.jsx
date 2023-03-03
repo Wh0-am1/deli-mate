@@ -29,7 +29,6 @@ function Lists({ search, Max, Sort, Type }) {
             updateData("Foodlistings", doc.id, { flag: false });
           } else {
             List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
-            console.log(List);
             setLoad(false);
           }
         });

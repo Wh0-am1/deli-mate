@@ -47,7 +47,10 @@ function BookedList({ bookId, qty, uid, id, price }) {
           </div>
           <div className="qty flex">
             <label>Price : </label>
-            <p>{price}</p>
+            <p>
+              {Number(price) * Number(qty) -
+                Math.trunc((price * qty * 30) / 100)}
+            </p>
           </div>
           <div className="phone flex">
             <label>Phone : </label>

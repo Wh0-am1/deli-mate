@@ -8,7 +8,6 @@ import { db } from "../firebase-config";
 import ReactLoading from "react-loading";
 
 function BList() {
-  const [order, setOrder] = useState([]);
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
   const [search, setSearch] = useState("");
@@ -21,7 +20,8 @@ function BList() {
         const List = [];
         snapshot.docs.forEach((doc) => {
           List.push({ uid: doc.data().user_Id, id: doc.id, ...doc.data() });
-          setOrder(List);
+
+          setData(List);
           setLoad(false);
         });
         !List[0] && setLoad(false);
@@ -33,26 +33,8 @@ function BList() {
 
     return unsubscribe;
   }, []);
-  useEffect(() => {
-    let List = [];
-    if (search) {
-      List = order.filter((e) => e.name.search(search) === 0);
-      setData(List);
-    } else {
-      setData(order);
-    }
-  }, [search, order]);
   return (
     <section className="b-list">
-      <div className="search">
-        <input
-          type="text"
-          placeholder="search"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <i className="icon fa-sharp fa-solid fa-magnifying-glass" />
-      </div>
       {!data[0] && !load && (
         <div className="load">
           <h1>No Data Found</h1>
@@ -75,6 +57,7 @@ function BList() {
           uid={elt.user_Id}
           id={elt.id}
           key={elt.id}
+          name={elt.name}
           price={elt.price}
         />
       ))}

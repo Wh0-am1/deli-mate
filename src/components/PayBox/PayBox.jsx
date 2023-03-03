@@ -19,7 +19,7 @@ function PayBox({ box, setBox, qty, sid, uid, type, price, nQty, id }) {
   const setOrder = () => {
     updateData("Foodlistings", id, { nQty: Number(nQty) + Number(qty) });
     dataEntry(
-      { qty, bookId, sid, type, price, status: "booked", name },
+      { qty, bookId, sid, type, price, status: "booked" },
       "orders",
       uid
     );
@@ -29,13 +29,6 @@ function PayBox({ box, setBox, qty, sid, uid, type, price, nQty, id }) {
     setScale("");
     const d = new Date();
     setBookId(d.getMilliseconds() * 197436);
-
-    async function getName() {
-      const dt = await getDataId("users", currentUser.uid);
-      dt && setName(dt.name);
-    }
-
-    getName();
   }, []);
   return (
     <section className={`payBox`}>
