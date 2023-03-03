@@ -56,6 +56,7 @@ function Account({ setLogged }) {
         where("user_Id", "==", currentUser.uid),
       ]);
       setHistory(List);
+      setLoad(false);
     };
 
     historyData();

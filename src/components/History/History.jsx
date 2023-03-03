@@ -62,7 +62,7 @@ function History() {
       <div className="container">
         {history.map((elt) => (
           <AddHistory
-            price={elt.price}
+            price={elt.nPrice}
             time={elt.time}
             qty={elt.qty}
             type={elt.type}

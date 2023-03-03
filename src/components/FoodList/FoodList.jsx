@@ -18,8 +18,8 @@ function FoodList({ uid, price, qty, type, id, eFlag, nQty }) {
 
   function editOnce() {
     const List = [];
-    ePrice && List.push({ price: ePrice });
-    eQty && List.push({ qty: eQty });
+    ePrice && List.push({ nPrice: Number(ePrice) });
+    eQty && List.push({ qty: Number(eQty) });
     eType && List.push({ type: eType });
 
     if (List[0]) {

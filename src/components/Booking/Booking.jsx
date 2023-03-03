@@ -168,7 +168,6 @@ function Booking({
               <p>{`${nPrice}/-`}</p>
               <p className="strike">{`${price}/-`}</p>
             </div>
-            <p>10:00 to 10:30</p>
             <div className="map">
               <div className="location-title">
                 <h1>Location</h1>
