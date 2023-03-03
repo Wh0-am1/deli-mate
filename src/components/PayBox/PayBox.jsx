@@ -12,9 +12,6 @@ function PayBox({ box, setBox, qty, sid, uid, type, price, nQty, id }) {
   const [display, setDisplay] = useState("display");
   const [width2, setWidth2] = useState("width-0");
   const [bookId, setBookId] = useState("");
-  const [name, setName] = useState("");
-
-  const { currentUser } = useAuth();
 
   const setOrder = () => {
     updateData("Foodlistings", id, { nQty: Number(nQty) + Number(qty) });

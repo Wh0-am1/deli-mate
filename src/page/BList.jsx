@@ -10,7 +10,6 @@ import ReactLoading from "react-loading";
 function BList() {
   const [data, setData] = useState([]);
   const [load, setLoad] = useState(true);
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const q = query(collection(db, "orders"), where("status", "==", "booked"));
@@ -57,7 +56,6 @@ function BList() {
           uid={elt.user_Id}
           id={elt.id}
           key={elt.id}
-          name={elt.name}
           price={elt.price}
         />
       ))}
