@@ -7,7 +7,7 @@ function Feedback({ uid, time, msg, id }) {
   const [date, setDate] = useState("");
 
   useEffect(() => {
-    setDate(dateTime(Date(date).toString()));
+    setDate(dateTime(time.toDate().toString()));
     const getName = async () => {
       const dt = await getDataId("users", uid);
       setName(dt.name);

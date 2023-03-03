@@ -24,7 +24,7 @@ function Report({ sid, uid, time, msg, id, res }) {
     });
   }
   useEffect(() => {
-    setDate(dateTime(Date(date).toString()));
+    setDate(dateTime(time.toDate().toString()));
     const getUname = async () => {
       const dt = await getDataId("users", uid);
       setUname(dt?.name);

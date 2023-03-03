@@ -12,7 +12,7 @@ function OrderHistory({ sid, date, price, qty, type, bId, status }) {
       const dt = await getDataId("users", sid);
       setName(dt.name);
     };
-    setTime(dateTime(Date(date).toString()));
+    setTime(dateTime(date.toDate().toString()));
     getName();
   }, []);
   return (

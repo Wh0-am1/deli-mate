@@ -8,7 +8,7 @@ import "./AddHistory.css";
 function AddHistory({ time, qty, price, type, id, flag, nQty }) {
   const [date, setDate] = useState("");
   useEffect(() => {
-    setDate(dateTime(Date(date).toString()));
+    setDate(dateTime(time.toDate().toString()));
   }, []);
   return (
     <section className="addHistory">
