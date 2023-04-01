@@ -8,6 +8,7 @@ import SelfReview from "../components/SelfReview/SelfReview";
 import { useAuth } from "../contexts/AuthContext";
 import { getDataId } from "../dataManagement";
 import { db } from "../firebase-config";
+import ReactLoading from "react-loading";
 
 let height;
 
@@ -72,37 +73,51 @@ function Order() {
   repClick ? (height = "bg-height") : (height = "null");
   return (
     <section className={`order ${height}`}>
-      <div className="Booking">
-        <Booking
-          setRepClick={setRipClick}
-          repClick={repClick}
-          price={data.price}
-          qty={Number(data.qty)}
-          nQty={Number(data.nQty)}
-          type={data.type}
-          sid={data.user_Id}
-          nPrice={data.nPrice}
-          name={name}
-          pic={img}
-          id={data.id}
-          address={address}
-        />
-      </div>
-      <div className="reviews">
-        {reviews.map((elt) => {
-          return (
-            <Review
-              msg={elt.msg}
-              id={elt.id}
-              uid={elt.user_Id}
-              date={elt.time}
-              rate={elt.rate}
-              key={elt.id}
-            />
-          );
-        })}
-      </div>
-      {sid !== currentUser.uid && (
+      {!data && (
+        <div className="loading-login">
+          <ReactLoading
+            type={"spin"}
+            color={"rgb(100, 140, 127)"}
+            height={"10%"}
+            width={"10%"}
+          />
+        </div>
+      )}
+      {data && (
+        <div className="Booking">
+          <Booking
+            setRepClick={setRipClick}
+            repClick={repClick}
+            price={data.price}
+            qty={Number(data.qty)}
+            nQty={Number(data.nQty)}
+            type={data.type}
+            sid={data.user_Id}
+            nPrice={data.nPrice}
+            name={name}
+            pic={img}
+            id={data.id}
+            address={address}
+          />
+        </div>
+      )}
+      {data && (
+        <div className="reviews">
+          {reviews.map((elt) => {
+            return (
+              <Review
+                msg={elt.msg}
+                id={elt.id}
+                uid={elt.user_Id}
+                date={elt.time}
+                rate={elt.rate}
+                key={elt.id}
+              />
+            );
+          })}
+        </div>
+      )}
+      {sid !== currentUser.uid && data && (
         <div className="reviewing">
           <SelfReview sid={data.user_Id} />
         </div>
