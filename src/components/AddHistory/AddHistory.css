@@ -37,3 +37,12 @@
 .addHistory .btn-flag:active {
   scale: 0.8;
 }
+@media (max-width: 635px) {
+  .addHistory p {
+    max-width: 200px;
+    text-align: center;
+  }
+  .addHistory label {
+    min-width: 60px;
+  }
+}

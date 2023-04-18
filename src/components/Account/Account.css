@@ -90,8 +90,9 @@
   padding-top: 4rem;
   position: relative;
   z-index: 1;
-  max-width: 500px;
+  max-width: 400px;
   overflow-wrap: break-word;
+  text-align: center;
 }
 .account p {
   font-family: "Josefin Sans", sans-serif;
@@ -258,8 +259,16 @@
   z-index: 7;
 }
 @media (max-width: 630px) {
+  .account .feedback-btn {
+    right: -1rem;
+    top: 5rem;
+  }
+  .account .card p {
+    max-width: 330px;
+  }
   .account .container {
     flex-direction: column;
+    padding: 1rem 0 0 0;
   }
   .account .order-details {
     transition: height 0.6s;
@@ -290,7 +299,7 @@
     animation: none;
   }
 }
-@media (max-width: 381px) {
+@media (max-width: 450px) {
   .account .ac-container {
     scale: 80%;
   }
