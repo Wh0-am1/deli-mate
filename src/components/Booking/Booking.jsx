@@ -65,6 +65,7 @@ function Booking({
         <PayBox
           box={box}
           setBox={setBox}
+          setQuantity={setQuantity}
           qty={quantity}
           nQty={nQty}
           sid={sid}

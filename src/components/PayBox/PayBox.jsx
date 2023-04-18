@@ -6,7 +6,18 @@ import { useAuth } from "../../contexts/AuthContext";
 import { dataEntry, getDataId, updateData } from "../../dataManagement";
 import "./PayBox.css";
 
-function PayBox({ box, setBox, qty, sid, uid, type, price, nQty, id }) {
+function PayBox({
+  box,
+  setBox,
+  qty,
+  sid,
+  uid,
+  type,
+  price,
+  nQty,
+  id,
+  setQuantity,
+}) {
   const [scale, setScale] = useState("scale");
   const [width, setWidth] = useState("width-0");
   const [display, setDisplay] = useState("display");
@@ -20,6 +31,7 @@ function PayBox({ box, setBox, qty, sid, uid, type, price, nQty, id }) {
       "orders",
       uid
     );
+    setQuantity("");
   };
 
   useEffect(() => {
