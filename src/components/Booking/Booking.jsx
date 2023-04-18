@@ -28,6 +28,7 @@ function Booking({
   nQty,
   id,
   address,
+  setBk,
 }) {
   const { currentUser } = useAuth();
   const [box, setBox] = useState(false);
@@ -73,6 +74,7 @@ function Booking({
           price={nPrice}
           type={type}
           id={id}
+          setBk={setBk}
         />
       )}
       <div
@@ -150,6 +152,7 @@ function Booking({
                 <button
                   onClick={() => {
                     quantity && setBox(!box);
+                    setBk(true);
                   }}
                 >
                   Book Now

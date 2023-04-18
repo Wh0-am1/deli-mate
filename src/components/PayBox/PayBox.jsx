@@ -17,6 +17,7 @@ function PayBox({
   nQty,
   id,
   setQuantity,
+  setBk,
 }) {
   const [scale, setScale] = useState("scale");
   const [width, setWidth] = useState("width-0");
@@ -32,6 +33,7 @@ function PayBox({
       uid
     );
     setQuantity("");
+    setBk(false);
   };
 
   useEffect(() => {

@@ -7,7 +7,12 @@ function Review({ msg, id, uid, date, rate }) {
   const [name, setName] = useState("");
   const [img, setImg] = useState("");
 
-  const time = date.toDate().toString().slice(0, 15);
+  let time;
+  try {
+    time = date?.toDate().toString().slice(0, 15);
+  } catch (e) {
+    console.log(e);
+  }
 
   const getName = async (id) => {
     const dt = await getDataId("users", id);

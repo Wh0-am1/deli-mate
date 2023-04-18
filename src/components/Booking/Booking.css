@@ -189,7 +189,7 @@
 }
 .bg-height {
   height: 100vh;
-  overflow: hidden;
+  overflow: scroll;
 }
 .Booking .div-field .textarea-report {
   width: 90%;

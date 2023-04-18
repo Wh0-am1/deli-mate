@@ -1,5 +1,5 @@
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Booking from "../components/Booking/Booking";
@@ -66,11 +66,12 @@ function Order() {
   }, [sid]);
 
   const [repClick, setRipClick] = useState(false);
+  const [bk, setBk] = useState(false);
   const [data, setData] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [img, setImg] = useState("");
-  repClick ? (height = "bg-height") : (height = "null");
+  bk || repClick ? (height = "bg-height") : (height = "null");
   return (
     <section className={`order ${height}`}>
       {!data && (
@@ -98,6 +99,7 @@ function Order() {
             pic={img}
             id={data.id}
             address={address}
+            setBk={setBk}
           />
         </div>
       )}
