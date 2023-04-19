@@ -301,9 +301,19 @@
     animation: none;
   }
 }
-@media (max-width: 450px) {
-  .account .ac-container {
-    scale: 80%;
+@media (max-width: 500px) {
+  .account .card {
+    padding: 4rem 0.5rem 0 0.5rem;
+    line-height: 2rem;
+  }
+  .account .card label {
+    font-size: 1.2rem;
+  }
+  .account .card p {
+    font-size: 1rem;
+  }
+  .account .card .orders {
+    padding: 0 0 0.5rem 0;
   }
 }
 
