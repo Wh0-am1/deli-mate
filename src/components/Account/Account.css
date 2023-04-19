@@ -57,6 +57,7 @@
 .editAccount .scale {
   scale: 0;
   opacity: 0;
+  visibility: hidden;
 }
 .account h1 {
   margin-bottom: 1.5rem;
