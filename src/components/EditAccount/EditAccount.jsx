@@ -80,7 +80,7 @@ function EditAccount({ edit, setEdit, setUpdate, setImage }) {
               alt="profile_pic"
             />
             <div className="edit-pic">
-              <label>Profile : </label>
+              <label className="edit-title">Profile : </label>
               <input
                 ref={pic}
                 type="file"

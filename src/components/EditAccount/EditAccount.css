@@ -79,3 +79,18 @@
 .editAccount button:hover {
   opacity: 0.8;
 }
+@media (max-width: 500px) {
+  .editAccount .card .edit-title {
+    font-size: 1.5rem;
+  }
+  .editAccount .card {
+    padding: 1.5rem 1rem 1rem 1rem;
+  }
+  .editAccount button {
+    font-size: 1rem;
+  }
+  .editAccount input::placeholder,
+  .editAccount textarea::placeholder {
+    font-size: 0.8rem;
+  }
+}
